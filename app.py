@@ -44,9 +44,9 @@ def logout():
 def usuarios():
   if 'usuario' in session:
     usuario = Usuario.obtener_por_email(session['usuario'])
-    if usuario.tipo_usuario():
+    if usuario.tipo_usuario:
       lista_usuarios = Usuario.obtener_todos()
-      return render_template('usuarios.html', usuario=usuario, lista_usuarios=lista_usuarios)
+      return render_template('usuario.html', usuario=usuario, lista_usuarios=lista_usuarios)
     else:
       return redirect('/dashboard')
   else:
@@ -130,18 +130,19 @@ def editar_producto(producto_id=0):
 
 @app.route('/proveedores')
 def proveedores():
-    return jsonify({'mensaje': 'Esto es la página de proveedores'})
+   return render_template('proveedor.html')
 
 
 @app.route('/bodegas')
 def bodegas():
-    return jsonify({'mensaje': 'Esto es la página de bodegas'})
+    return render_template('bodega.html')
 
 
 @app.route('/movimientos')
 def movimientos():
-    return jsonify({'mensaje': 'Esto es la página de movimientos'})
+    return render_template('movimientos.html')
+    
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 

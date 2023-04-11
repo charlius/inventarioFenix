@@ -1,0 +1,20 @@
+body{
+    background-color: #F27F3D;
+}
+/* estilos vista login */
+.login {
+    background-color: #BF5A36;
+  }
+
+  .h1-titulo{
+    font-family: "Calisto MT", serif;
+    font-size: 50px;
+    font-weight: bold;
+  }
+  .campos{
+    font-family: "Calisto MT", serif;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  /* fin vista estilos login */
+  
