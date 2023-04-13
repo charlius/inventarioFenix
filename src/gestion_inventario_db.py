@@ -147,6 +147,7 @@ class Bodega:
       bodega = Bodega(resultado[1], resultado[2])
       bodega.id = resultado[0]
       bodegas.append(bodega)
+      
     return bodegas
 
   @staticmethod
@@ -160,6 +161,10 @@ class Bodega:
       bodega = Bodega(resultado[0][1], resultado[0][2])
       bodega.id = resultado[0][0]
     return bodega
+  
+  
+  
+  
 
 
 class Usuario:

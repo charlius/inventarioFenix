@@ -161,7 +161,35 @@ def proveedores():
 
 @app.route('/bodegas')
 def bodegas():
-    return render_template('bodega.html')
+    if 'usuario' in session:
+        usuario = Usuario.obtener_por_email(session['usuario'])
+        bodegas = Bodega.obtener_todos()
+
+        # incluir variable en la respuesta
+        return render_template('bodega.html', usuario=usuario, bodegas=bodegas)
+    else:
+        return redirect('/')
+    
+@app.route('/bodega/crear_bodega', methods=['GET', 'POST'])
+def crear_bodega():
+    if 'usuario' not in session:
+        return redirect('/')
+    if request.method == 'POST':
+        print("hola")
+        nombre_bodega = request.form['nombre_bodega']
+        direccion = request.form['direccion']
+        
+        nueva_bodega = Bodega(
+           nombre_bodega=nombre_bodega,
+           direccion=direccion
+          )
+        nueva_bodega.guardar()
+        return redirect('/bodegas')
+    proveedores = Proveedor.obtener_todos()
+    bodegas = Bodega.obtener_todos()
+    return render_template('crear_bodega.html')
+
+
 
 
 @app.route('/movimientos')
