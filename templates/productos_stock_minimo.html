@@ -1,0 +1,33 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+    <h1>Productos filtrados</h1>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio de compra</th>
+        <th>Precio de venta</th>
+        <th>Cantidad</th>
+        <th>Cantidad mínima</th>
+        <th>Proveedor ID</th>
+        <th>ID de bodega</th>
+      </tr>
+      {% for producto in productos %}
+        <tr>
+          <td>{{ producto[0] }}</td>
+          <td>{{ producto[1] }}</td>
+          <td>{{ producto[2] }}</td>
+          <td>{{ producto[3] }}</td>
+          <td>{{ producto[4] }}</td>
+          <td>{{ producto[5] }}</td>
+          <td>{{ producto[6] }}</td>
+          <td>{{ producto[7] }}</td>
+          <td>{{ producto[8] }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+ 
+</html>
+{% endblock %}

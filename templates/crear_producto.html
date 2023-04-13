@@ -1,48 +1,50 @@
 {% extends 'dashboard.html' %}
 
 {% block content %}
-    <h1>Crear nuevo producto</h1>
-    <form method="POST" action="{{ url_for('crear_producto') }}">
-        <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" required>
+    <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Crear nuevo producto</h1>
+    <br>
+    <form class="bg-white" method="POST" action="{{ url_for('crear_producto') }}">
+
+        <div class="relative z-0 w-full mb-6 group">
+            <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="nombre" placelholder="Nombre"></label>
+            <input type="text" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" id="nombre" name="nombre" required placeholder="Nombre">
         </div>
-        <div class="form-group">
-            <label for="descripcion">Descripción</label>
-            <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+        <div class="relative z-0 w-full mb-6 group">
+            <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="descripcion"></label>
+            <input type="text" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" id="descripcion" name="descripcion" required placeholder="Descripción">
         </div>
-        <div class="form-group">
-            <label for="precio_compra">Precio de compra</label>
-            <input type="number" class="form-control" id="precio_compra" name="precio_compra" required>
+        <div class="relative z-0 w-full mb-6 group">
+            <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="precio_compra"></label>
+            <input type="number" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" id="precio_compra" name="precio_compra" required placeholder="Precio de compra:">
         </div>
-        <div class="form-group">
-            <label for="precio_venta">Precio de venta</label>
-            <input type="number" class="form-control" id="precio_venta" name="precio_venta" required>
+        <div class="relative z-0 w-full mb-6 group">
+            <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="precio_venta"></label>
+            <input type="number" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" id="precio_venta" name="precio_venta" required placeholder="Precio de venta">
         </div>
-        <div class="form-group">
-            <label for="existencia">Existencia</label>
-            <input type="number" class="form-control" id="existencia" name="existencia" required>
+        <div class="relative z-0 w-full mb-6 group">
+            <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="existencia"></label>
+            <input type="number" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" id="existencia" name="existencia" required placeholder="Existencia">
         </div>
-        <div class="form-group">
-            <label for="cantidad_minima">cantidad minima</label>
-            <input type="number" class="form-control" id="cantidad_minima" name="cantidad_minima" required>
+        <div class="relative z-0 w-full mb-6 group">
+            <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="cantidad_minima"></label>
+            <input type="number" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" id="cantidad_minima" name="cantidad_minima" required placeholder="Cantidad Minima">
         </div>
-        <div class="form-group">
-            <label for="bodega_id">Bodega</label>
-            <select class="form-control" id="bodega_id" name="bodega_id" required>
+        <div class="relative z-0 w-full mb-6 group">
+            <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="bodega_id"></label>
+            <select class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" id="bodega_id" name="bodega_id" required placeholder="Bodega">
                 {% for bodega in bodegas %}
                     <option value="{{ bodega.id }}">{{ bodega.nombre_bodega }}</option>
                 {% endfor %}
             </select>
         </div>
-        <div class="form-group">
-            <label for="proveedor_id">Proveedor</label>
-            <select class="form-control" id="proveedor_id" name="proveedor_id" required>
+        <div class="relative z-0 w-full mb-6 group">
+            <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="proveedor_id"></label>
+            <select class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" id="proveedor_id" name="proveedor_id" required placelholder="Proveedor">
                 {% for proveedor in proveedores %}
                     <option value="{{ proveedor.id }}">{{ proveedor.nombre_proveedor }}</option>
                 {% endfor %}
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Guardar</button>
     </form>
 {% endblock %}

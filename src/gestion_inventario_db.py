@@ -80,6 +80,8 @@ class Producto:
     valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega, self.id)
     self.conexion_db.ejecutar_consulta(consulta, valores)
 
+  
+
   @staticmethod
   def obtener_todos():
     consulta = "SELECT * FROM productos"
@@ -91,6 +93,7 @@ class Producto:
       producto.id = resultado[0]
       productos.append(producto)
     return productos
+  
 
   @staticmethod
   def obtener_por_id(id):
@@ -103,6 +106,18 @@ class Producto:
       producto = Producto(resultado[0][1], resultado[0][2], resultado[0][3], resultado[0][4], resultado[0][5], resultado[0][6],resultado[0][7],resultado[0][8])
       producto.id = resultado[0][0]
     return producto
+  
+  @staticmethod
+  def traer_stock_minimo():
+    consulta = "SELECT * FROM productos WHERE cantidad <= 5"
+    conexion_db = ConexionBaseDatos()
+    resultados = conexion_db.ejecutar_consulta(consulta)
+    productos = []
+    for resultado in resultados:
+      producto = Producto(resultado[1], resultado[2], resultado[3], resultado[4], resultado[5])
+      productos.append(producto)
+    return resultados
+    
 
 
 class Bodega:
@@ -274,3 +289,5 @@ class Movimiento:
       movimiento.fecha = resultado[5]
       movimientos.append(movimiento)
     return movimientos
+  
+ 
