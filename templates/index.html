@@ -3,7 +3,7 @@
   <head>
     <title>Inicio</title>
     <!-- Carga los archivos CSS de Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estilos.css') }}">
     
   </head>
@@ -27,7 +27,7 @@
 
 
 <!-- Section: Design Block -->
-<section class=" text-center text-lg-start">
+<!-- <section class=" w-4/5 h-full mx-auto relative bg-white bg-opacity-25 backdrop-filter backdrop-blur-lg border-4 border-white border-opacity-25 shadow-md rounded-lg">
   
   <div class="card mb-2 login">
     <div class="row g-0 d-flex align-items-center">
@@ -40,19 +40,19 @@
         <div class="card-body py-5 px-md-5">
 
           <form action="{{ url_for('login') }}" method="POST">
-            <!-- Email input -->
+            
             <div class="form-outline mb-4">
               <label class="campos" for="username">Nombre de usuario:</label>
           <input type="text" class="form-control" id="username" name="username" required>
             </div>
 
-            <!-- Password input -->
+            
             <div class="form-outline mb-4">
               <label class="campos" for="password">Contraseña:</label>
           <input type="password" class="form-control" id="password" name="password" required>
             </div>
 
-            <!-- 2 column grid layout for inline styling -->           
+                       
               <button class="btn btn-primary" type="submit">Iniciar Sesion</button>
              
            
@@ -63,7 +63,54 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
+<div class="2xl:container h-screen m-auto">
+  <div hidden class="fixed inset-0 w-7/12 lg:block">
+    <img src="https://cdn.pixabay.com/photo/2016/12/04/23/22/flea-market-1882817_1280.jpg" class="w-full h-full " alt="Don felix">
+  </div>
+  <div hidden role="hidden" class="fixed inset-0 w-6/12 ml-auto bg-white bg-opacity-70 backdrop-blur-xl lg:block"></div>
+  <div class="relative h-full ml-auto lg:w-6/12">
+      <div class="m-auto py-12 px-6 sm:p-20 xl:w-10/12">
+          <div class="space-y-4">
+              
+              <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Bienvenido a Inventario Don Felix</h1>
+          </div>
+          
+          
+
+          
+          <form action="{{ url_for('login') }}" method="POST" class="space-y-6 py-6">
+              <div>
+                  <!-- <input 
+                          type="email" 
+                          placeholder="Your Email"
+                          class="w-full py-3 px-6 ring-1 ring-gray-300 rounded-xl placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-red-400 focus:invalid:outline-none"
+                  > -->
+                  <label for="username" placeholder="Nombre de Usuario">Nombre de usuario:</label>
+                  
+          <input type="text" class="w-full py-3 px-6 ring-1 ring-gray-300 rounded-xl placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-red-400 focus:invalid:outline-none" id="username" name="username" required>
+              </div>
+
+              <div class="">
+                <label class="" for="password">Contraseña:</label>
+                <input type="password" class="w-full py-3 px-6 ring-1 ring-gray-300 rounded-xl placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-red-400 focus:invalid:outline-none" id="password" name="password" required>
+                  <button type="reset" class="w-max p-3 -mr-3">
+                      <span class="text-sm tracking-wide text-blue-600">Olvido Contraseña ?</span>
+                  </button>
+              </div>
+
+              <div>
+                  <button class="w-full px-6 py-3 rounded-xl bg-sky-500 transition hover:bg-sky-600 focus:bg-sky-600 active:bg-sky-800">
+                      <span class="font-semibold text-white text-lg">Ingresar</span>
+                  </button>
+                 
+              </div>
+          </form>
+
+          
+      </div>
+  </div>
+</div>
 <!-- Section: Design Block -->
 <!-- Section: Design Block -->
     <!-- Carga los archivos JavaScript de Bootstrap -->

@@ -17,4 +17,13 @@ body{
     font-weight: bold;
   }
   /* fin vista estilos login */
+
+  @media only screen and (min-width: 768px) {
+    #navbarMenu {
+      display: flex !important;
+    }
+    #hamburgerBtn {
+      display: none;
+    }
+  }
   
