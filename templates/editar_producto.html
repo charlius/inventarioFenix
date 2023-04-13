@@ -15,6 +15,13 @@
             <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="precio_compra"></label>
             <input type="number" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" id="precio_compra" name="precio_compra" value="{{ producto.precio_compra }}" required placeholder="Precio_compra">
         </div>
+        <div>
+            <label for="mi-checkbox">precio de venta por porcentaje:</label>
+	        <input type="checkbox" id="mi-checkbox">
+        </div>
+        <div id="por_venta" style="display:none;">
+            <input type="number" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" id="porcentaje_venta" name="porcentaje_venta" required placeholder="porcentaje de venta (ej:20)">
+        </div>
         <div class="relative z-0 w-full mb-6 group">
             <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="precio_venta"></label>
             <input type="number" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" id="precio_venta" name="precio_venta" value="{{ producto.precio_venta }}" required placeholder="Precio_venta">
@@ -49,4 +56,43 @@
         </div>
         <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar</button>
     </form>
+    <script>
+		const miCheckbox = document.getElementById("mi-checkbox");
+        const miElemento = document.getElementById("por_venta");
+        const precio_venta = document.getElementById("precio_venta")
+        const precio_compra = document.getElementById("precio_compra")
+        const porcentaje_venta = document.getElementById("porcentaje_venta")
+
+        miCheckbox.addEventListener("change", function() {
+            if (precio_compra.value === ""){
+
+                alert("aun no ingresas precio de compra")
+                this.checked = false
+                console.log(precio_compra.value === "")
+                console.log(precio_compra.value)
+                console.log(this.checked)
+            }
+
+            if (this.checked) {
+                miElemento.style.display = "block";
+                precio_venta.value = 0
+                precio_venta.disabled = true;
+            } else {
+                miElemento.style.display = "none";
+                precio_venta.disabled = false;
+            }
+        });
+
+        //calculo del porcentaje de venta
+        porcentaje_venta.addEventListener("input", function() {
+        const valorPorcentaje = parseFloat(porcentaje_venta.value);
+        const valorInput = parseFloat(precio_compra.value);
+        if (!isNaN(valorPorcentaje) && !isNaN(valorInput)) {
+            const resultado = valorInput * (valorPorcentaje / 100);
+            precio_venta.value = parseInt(valorInput) + parseInt(resultado.toFixed(2)); // setear el resultado en el tercer input
+        } else {
+            precio_venta.value = ""; // vaciar el tercer input si alguno de los valores no es un número
+        }
+        });
+	</script>
 {% endblock %}

@@ -22,7 +22,6 @@ def login():
   username = request.form['username']
   password = request.form['password']
   usuario = Usuario.obtener_por_email(username)
-  print(usuario.nombre_usuario)
   if usuario and verificar_password(password, usuario.contrasena):
     print("correcta las credenciales..!")
     session['usuario'] = usuario.nombre_usuario
@@ -156,7 +155,55 @@ def traer_stock_minimo():
 
 @app.route('/proveedores')
 def proveedores():
-   return render_template('proveedor.html')
+  if 'usuario' not in session:
+        return redirect('/')
+  proveedores = Proveedor.obtener_todos()
+  print(str(proveedores[0].nombre_proveedor))
+  return render_template('proveedor.html', proveedores=proveedores)
+
+@app.route('/proveedores/<int:proveedor_id>/editar', methods=['GET', 'POST'])
+def editar_proveedor(proveedor_id=0):
+    if 'usuario' not in session:
+        return redirect('/')
+    proveedor = Proveedor.obtener_por_id(proveedor_id)
+    if not proveedor:
+        return redirect('/proveedores')
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        direccion = request.form['direccion']
+        telefono = request.form['telefono']
+
+        proveedor_edit = Proveedor(
+           nombre_proveedor=nombre,
+           direccion=direccion,
+           telefono=telefono
+        )
+        proveedor_edit.id = proveedor_id
+        print(proveedor_edit.id)
+
+        proveedor_edit.editar()
+        return redirect('/proveedores')
+    return render_template('editar_proveedor.html', proveedor=proveedor)
+
+@app.route('/proveedores/crear_proveedor', methods=['GET', 'POST'])
+def crear_proveedor():
+    if 'usuario' not in session:
+        return redirect('/')
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        direccion = request.form['direccion']
+        telefono = request.form['telefono']
+
+        nuevo_proveedor = Proveedor(
+           nombre_proveedor=nombre,
+           direccion=direccion,
+           telefono=telefono
+        )
+
+
+        nuevo_proveedor.guardar()
+        return redirect('/proveedores')
+    return render_template('crear_proveedor.html')
 
 
 @app.route('/bodegas')

@@ -1,30 +1,24 @@
 {% extends 'dashboard.html' %}
 
 {% block content %}
-    <h1>Productos filtrados</h1>
+    <h1>Productos con stock minimo</h1>
     <table>
       <tr>
         <th>ID</th>
         <th>Nombre</th>
         <th>Descripción</th>
-        <th>Precio de compra</th>
-        <th>Precio de venta</th>
         <th>Cantidad</th>
         <th>Cantidad mínima</th>
-        <th>Proveedor ID</th>
-        <th>ID de bodega</th>
+        <th>Ajustar cantidad</th>
       </tr>
       {% for producto in productos %}
         <tr>
           <td>{{ producto[0] }}</td>
           <td>{{ producto[1] }}</td>
           <td>{{ producto[2] }}</td>
-          <td>{{ producto[3] }}</td>
-          <td>{{ producto[4] }}</td>
           <td>{{ producto[5] }}</td>
           <td>{{ producto[6] }}</td>
-          <td>{{ producto[7] }}</td>
-          <td>{{ producto[8] }}</td>
+          <td class="px-6 py-4"><a href="/productos/{{ producto[0] }}/editar" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ajusatr cantidad</a></td>
         </tr>
       {% endfor %}
     </table>
