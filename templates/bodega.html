@@ -15,18 +15,16 @@
                     </div>
                     
                     <input type="text" id="searchInput" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar Bodega..." required>
-                    <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
                 </div>
             </form>
             <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <table id="table" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">ID</th>
                             <th scope="col" class="px-6 py-3">Nombre_Bodega</th>
                             <th scope="col" class="px-6 py-3">Dirección</th>
-                            
-                            <th scope="col" class="px-6 py-3"></th>
+                            <th scope="col" class="px-6 py-3">Opcion</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,8 +33,7 @@
                                 <td class="px-6 py-4" >{{ bodega.id }}</td>
                                 <td class="px-6 py-4" >{{ bodega.nombre_bodega }}</td>
                                 <td class="px-6 py-4" >{{ bodega.direccion }}</td>
-                                
-                                
+                                <td class="px-6 py-4" ><a href="/bodegas/{{ bodega.id }}/editar" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar</a></td>
 
                             </tr>
                         {% endfor %}
@@ -49,14 +46,19 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $("#searchInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("table tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var tabla = $('#table').DataTable({
+                "pagingType": "full_numbers",
+                "pageLength": 10,
+                "lengthMenu": [10, 25, 50],
+                "searching": true
             });
-        });
-    });
-</script>
+            
+            $('#searchInput').on('keyup', function() {
+                tabla.search(this.value).draw();
+            });
+            });
+    </script>
 {% endblock %}

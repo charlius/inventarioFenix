@@ -34,7 +34,13 @@ def login():
 def dashboard():
   if 'usuario' in session:
     usuario = Usuario.obtener_por_email(session['usuario'])
-    return render_template('dashboard.html', usuario=usuario)
+    list_producto = []
+    producto = Producto.traer_stock_minimo()
+    for prod in producto:
+       print(prod)
+       list_producto.append(list(prod))
+       print(list_producto)
+    return render_template('dashboard.html', usuario=usuario, productos=list_producto)
   else:
     return redirect('/')
 
@@ -45,17 +51,17 @@ def logout():
   return redirect('/')
 
 
-@app.route('/usuarios')
-def usuarios():
-  if 'usuario' in session:
-    usuario = Usuario.obtener_por_email(session['usuario'])
-    if usuario.tipo_usuario:
-      lista_usuarios = Usuario.obtener_todos()
-      return render_template('usuario.html', usuario=usuario, lista_usuarios=lista_usuarios)
-    else:
-      return redirect('/dashboard')
-  else:
-    return redirect('/')
+# @app.route('/usuarios')
+# def usuarios():
+#   if 'usuario' in session:
+#     usuario = Usuario.obtener_por_email(session['usuario'])
+#     if usuario.tipo_usuario:
+#       lista_usuarios = Usuario.obtener_todos()
+#       return render_template('usuario.html', usuario=usuario, lista_usuarios=lista_usuarios)
+#     else:
+#       return redirect('/dashboard')
+#   else:
+#     return redirect('/')
 
 
 @app.route('/productos')
@@ -232,12 +238,86 @@ def crear_bodega():
           )
         nueva_bodega.guardar()
         return redirect('/bodegas')
-    proveedores = Proveedor.obtener_todos()
-    bodegas = Bodega.obtener_todos()
     return render_template('crear_bodega.html')
 
+@app.route('/bodegas/<int:bodega_id>/editar', methods=['GET', 'POST'])
+def editar_bodega(bodega_id=0):
+    if 'usuario' not in session:
+        return redirect('/')
+    bodega = Bodega.obtener_por_id(bodega_id)
+    if not bodega:
+        return redirect('/bodegas')
+    if request.method == 'POST':
+        nombre = request.form['nombre_bodega']
+        direccion = request.form['direccion']
 
+        bodega_edit = Bodega(
+           nombre_bodega=nombre,
+           direccion=direccion
+        )
+        bodega_edit.id = bodega_id
+        print(bodega_edit.id)
 
+        bodega_edit.editar()
+        return redirect('/bodegas')
+    return render_template('editar_bodega.html', bodega=bodega)
+
+@app.route('/usuarios')
+def usuarios():
+    if 'usuario' not in session:
+        return redirect('/')
+
+        # incluir variable en la respuesta
+    usuarios = Usuario.obtener_todos()
+    print(usuarios[0].nombre_usuario)
+    return render_template('usuario.html', usuarios=usuarios)
+
+@app.route('/usuario/crear_usuario', methods=['GET', 'POST'])
+def crear_usuario():
+    if 'usuario' not in session:
+        return redirect('/')
+    if request.method == 'POST':
+        print(f"hola: {request.form}")
+        nombre_usuario = request.form['nombre_usuario']
+        password = request.form['password']
+        tipo_usuario = request.form['rol']
+
+        nueva_usuario = Usuario(
+           nombre_usuario=nombre_usuario,
+           contrasena=password,
+           tipo_usuario=tipo_usuario
+        )
+        nueva_usuario.guardar()
+        return redirect('/usuarios')
+    return render_template('crear_usuario.html')
+
+@app.route('/usuario/<id>/editar', methods=['GET', 'POST'])
+def editar_usuario(id=0):
+    print(f"este es id = {id}")
+    if 'usuario' not in session:
+        return redirect('/')
+    usuario = Usuario.obtener_por_id(id)
+
+    if not usuario:
+        return redirect('/usuarios')
+    print(request.method)
+    if request.method == 'POST':
+        print(request.form)
+        nombre_usuario = request.form['nombre_usuario']
+        password = request.form['password']
+        tipo_usuario = request.form['rol']
+        usuario_edit = Usuario(
+           nombre_usuario=nombre_usuario,
+           contrasena=password,
+           tipo_usuario=tipo_usuario
+        )
+        usuario_edit.id = id
+        print(usuario_edit.id)
+
+        usuario_edit.editar()
+        return redirect('/usuarios')
+    print("vee")
+    return render_template('editar_usuario.html', usuario=usuario)
 
 @app.route('/movimientos')
 def movimientos():

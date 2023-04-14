@@ -181,8 +181,12 @@ class Usuario:
     self.conexion_db.ejecutar_consulta(consulta, valores)
 
   def editar(self):
-    consulta = "UPDATE usuarios SET nombre_usuario=%s, contrasena=%s, tipo_usuario=%s WHERE id=%s"
-    valores = (self.nombre_usuario, generate_password_hash(self.contrasena), self.tipo_usuario, self.id)
+    if self.contrasena:
+      consulta = "UPDATE usuarios SET nombre_usuario=%s, contrasena=%s, tipo_usuario=%s WHERE id=%s"
+      valores = (self.nombre_usuario, generate_password_hash(self.contrasena), self.tipo_usuario, self.id)
+    else:
+      consulta = "UPDATE usuarios SET nombre_usuario=%s, tipo_usuario=%s WHERE id=%s"
+      valores = (self.nombre_usuario, self.tipo_usuario, self.id)
     self.conexion_db.ejecutar_consulta(consulta, valores)
 
   @staticmethod

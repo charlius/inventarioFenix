@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"> -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-luY+QeIqH3V9a9gJzmk7V57R65ZuN7NfhK1/wuJG5H2q3vcTYJSX/Je74zO5KLmOF0ZIeHmGQ2jKw+Eix0YcEg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estilos.css') }}">
@@ -69,85 +71,37 @@
      <div class="container mt-5">
 <!-- 
       <div class="w-72 h-72 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg"></div> -->
-      <div class="w-full mx-auto grid grid-cols-4">
-        <div class="col-span-1">
-          <!-- contenido de la tercera columna -->
-          <div class="w-52 h-36 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg">
-            <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">Stock Minimo</h5>
-            </a><br>
-           
-            <div class="text-center">
-            <!-- filtrar -->
-              <a href="/filtrar"class=" inline-flex items-center px-5 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                  Ver detalle
-                  <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-span-1">
-          <!-- contenido de la tercera columna -->
-          <div class="w-52 h-36 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg">
-            <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">Stock Minimo</h5>
-            </a><br>
-           
-            <div class="text-center">
-              <a href="#" class=" inline-flex items-center px-5 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                  Ver detalle
-                  <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-span-1">
-          <!-- contenido de la tercera columna -->
-          <div class="w-52 h-36 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg">
-            <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">Stock Minimo</h5>
-            </a><br>
-           
-            <div class="text-center">
-              <a href="#" class=" inline-flex items-center px-5 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                  Ver detalle
-                  <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-span-1">
-          <!-- contenido de la tercera columna -->
-          <div class="w-52 h-36 bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg">
-            <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">Stock Minimo</h5>
-            </a>
-           <br>
-           <div class="text-center">
-            <a href="#" class=" inline-flex items-center px-5 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Ver detalle
-                <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            </a>
-          </div>
-          </div>
+      <div>
+        <div id="clock">
+          <span id="time"></span>
+          <br>
+          <span id="date"></span>
         </div>
       </div>
+      <h1 class="titulo">Productos con stock minimo</h1>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Cantidad</th>
+          <th>Cantidad mínima</th>
+          <th>Ajustar cantidad</th>
+        </tr>
+        {% for producto in productos %}
+          <tr>
+            <td>{{ producto[0] }}</td>
+            <td>{{ producto[1] }}</td>
+            <td>{{ producto[2] }}</td>
+            <td>{{ producto[5] }}</td>
+            <td>{{ producto[6] }}</td>
+            <td class="px-6 py-4"><a href="/productos/{{ producto[0] }}/editar" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ajusatr cantidad</a></td>
+          </tr>
+        {% endfor %}
+      </table>
+      </div>
       <br>
-      
-      
 
-
-
-
-
-      
-     
-
-      
-
-      
-
-      
      </div>
 
    
@@ -160,4 +114,57 @@
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
     
   </body>
+  <style>
+        #clock {
+      text-align: center;
+      font-size: 3em;
+      font-weight: bold;
+      color: #333;
+    }
+
+    #time {
+      display: inline-block;
+      margin-right: 1em;
+    }
+
+    #date {
+      display: inline-block;
+    }
+  </style>
+
+  <script>
+    function updateTime() {
+      var now = new Date();
+      var hours = now.getHours();
+      var minutes = now.getMinutes();
+      var seconds = now.getSeconds();
+      var day = now.getDate();
+      var month = now.getMonth() + 1;
+      var year = now.getFullYear();
+
+      // Agrega un 0 antes si el número es menor que 10
+      if (hours < 10) {
+        hours = "0" + hours;
+      }
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      if (seconds < 10) {
+        seconds = "0" + seconds;
+      }
+      if (day < 10) {
+        day = "0" + day;
+      }
+      if (month < 10) {
+        month = "0" + month;
+      }
+
+      // Actualiza la hora y fecha en la página
+      document.getElementById("time").innerHTML = hours + ":" + minutes + ":" + seconds;
+      document.getElementById("date").innerHTML = day + "/" + month + "/" + year;
+    }
+
+    // Actualiza la hora cada segundo
+    setInterval(updateTime, 1000);
+  </script>
 </html>
