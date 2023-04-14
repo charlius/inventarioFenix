@@ -5,8 +5,9 @@
        
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Bodegas</h1>
-            <a href="/usuario/crear_usuario" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Nueva Bodega</a>
+            <h2 class="text-4xl font-bold dark:text-white">Lista de Usuarios</h2>
+            <br>
+            <a href="/usuario/crear_usuario" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Nueva Usuario</a>
             <form>   
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
                 <div class="relative">
@@ -30,10 +31,10 @@
                     <tbody>
                         {% for usuario in usuarios %}
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td class="px-6 py-4" >{{ usuario.id }}</td>
-                                <td class="px-6 py-4" >{{ usuario.nombre_usuario }}</td>
-                                <td class="px-6 py-4" >{{ usuario.tipo_usuario }}</td>
-                                <td class="px-6 py-4" ><a href="/usuario/{{ usuario.id }}/editar" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar</a></td>
+                                <td class="font-bold bg-white" >{{ usuario.id }}</td>
+                                <td class="font-bold bg-white" >{{ usuario.nombre_usuario }}</td>
+                                <td class="font-bold bg-white" >{{ usuario.tipo_usuario }}</td>
+                                <td class="px-6 py-4 font-bold bg-white" ><a href="/usuario/{{ usuario.id }}/editar" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar</a></td>
 
                             </tr>
                         {% endfor %}
@@ -47,18 +48,5 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            var tabla = $('#table').DataTable({
-                "pagingType": "full_numbers",
-                "pageLength": 10,
-                "lengthMenu": [10, 25, 50],
-                "searching": true
-            });
-            
-            $('#searchInput').on('keyup', function() {
-                tabla.search(this.value).draw();
-            });
-            });
-    </script>
+   
 {% endblock %}
