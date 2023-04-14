@@ -45,7 +45,7 @@ class Proveedor:
       proveedor = Proveedor(resultado[0][1], resultado[0][2], resultado[0][3])
       proveedor.id = resultado[0][0]
     return proveedor
-  
+
 
 class Producto:
   def __init__(
@@ -109,7 +109,7 @@ class Producto:
   
   @staticmethod
   def traer_stock_minimo():
-    consulta = "SELECT * FROM productos WHERE cantidad <= 5"
+    consulta = "SELECT * FROM productos WHERE cantidad <= cantidad_minima"
     conexion_db = ConexionBaseDatos()
     resultados = conexion_db.ejecutar_consulta(consulta)
     productos = []
@@ -181,8 +181,12 @@ class Usuario:
     self.conexion_db.ejecutar_consulta(consulta, valores)
 
   def editar(self):
-    consulta = "UPDATE usuarios SET nombre_usuario=%s, contrasena=%s, tipo_usuario=%s WHERE id=%s"
-    valores = (self.nombre_usuario, generate_password_hash(self.contrasena), self.tipo_usuario, self.id)
+    if self.contrasena:
+      consulta = "UPDATE usuarios SET nombre_usuario=%s, contrasena=%s, tipo_usuario=%s WHERE id=%s"
+      valores = (self.nombre_usuario, generate_password_hash(self.contrasena), self.tipo_usuario, self.id)
+    else:
+      consulta = "UPDATE usuarios SET nombre_usuario=%s, tipo_usuario=%s WHERE id=%s"
+      valores = (self.nombre_usuario, self.tipo_usuario, self.id)
     self.conexion_db.ejecutar_consulta(consulta, valores)
 
   @staticmethod
