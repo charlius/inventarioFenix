@@ -1,6 +1,7 @@
+import json
 from werkzeug.security import check_password_hash
 from flask import Flask, jsonify, render_template, request, redirect, session
-from src.gestion_inventario_db import Bodega, Producto, Proveedor, Usuario
+from src.gestion_inventario_db import Bodega, Movimiento, Producto, Proveedor, Usuario
 
 
 
@@ -319,10 +320,37 @@ def editar_usuario(id=0):
     print("vee")
     return render_template('editar_usuario.html', usuario=usuario)
 
-@app.route('/movimientos')
+@app.route('/movimientos', methods=['GET', 'POST'])
 def movimientos():
-    return render_template('movimientos.html')
-    
+    if request.method == 'POST':
+        print(print(request.form))
+        tipo = request.form['tipo_movimiento']
+        fecha_inicio = request.form['fecha_inicio']
+        fecha_fin = request.form["fecha_fin"]
 
+        if "todo" in tipo:
+            movimientos = Movimiento.obtener_todos()
+        elif fecha_fin and fecha_fin:
+            movimientos = Movimiento.obtener_por_tipo_movimiento_rango_fecha(tipo, fecha_inicio, fecha_fin)
+        else:
+            movimientos = Movimiento.obtener_por_tipo_movimiento(tipo)
+        # Convertir cada objeto en un diccionario y agregarlo a una lista
+        movimientos_dict = []
+        for movimiento in movimientos:
+            del movimiento.conexion_db
+            movimiento_dict = movimiento.__dict__
+            movimientos_dict.append(movimiento_dict)
+
+        print(movimientos_dict)
+        # Serializar la lista de diccionarios en formato JSON
+        json_movimientos = json.dumps(movimientos_dict)
+        return json_movimientos
+    return render_template('movimientos.html')
+
+app.route('/movimientos/buscar', methods=['GET', 'POST'])
+def buscar_movimientos():
+    if request.method == 'POST':
+        print(print(request.form))
+    return render_template('movimientos.html')
 if __name__ == '__main__':
     app.run(debug=True)
