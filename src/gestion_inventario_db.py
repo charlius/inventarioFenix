@@ -1,5 +1,6 @@
 
-import datetime
+
+from datetime import datetime
 from werkzeug.security import generate_password_hash
 from src.db import ConexionBaseDatos
 
@@ -247,14 +248,21 @@ class Movimiento:
 
   @staticmethod
   def obtener_todos():
-    consulta = "SELECT * FROM movimientos"
+    consulta = """SELECT movimientos.id, productos.nombre_producto, bodegas.nombre_bodega, movimientos.cantidad, movimientos.tipo_movimiento, movimientos.fecha, productos.precio_venta, productos.precio_compra
+                  FROM movimientos, productos, bodegas
+                  WHERE movimientos.producto_id=productos.id and movimientos.bodega_id=bodegas.id
+              """
     conexion_db = ConexionBaseDatos()
     resultados = conexion_db.ejecutar_consulta(consulta)
     movimientos = []
     for resultado in resultados:
       movimiento = Movimiento(resultado[1], resultado[2], resultado[3], resultado[4])
       movimiento.id = resultado[0]
-      movimiento.fecha = resultado[5]
+      movimiento.fecha = resultado[5].strftime("%Y-%m-%d %H:%M:%S")
+      movimiento.precio_venta = resultado[6]
+      movimiento.total_venta = (resultado[6]*resultado[3])
+      movimiento.precio_compra = resultado[7]*resultado[3]
+      print(movimiento.tipo_movimiento)
       movimientos.append(movimiento)
     return movimientos
 
@@ -299,4 +307,57 @@ class Movimiento:
       movimientos.append(movimiento)
     return movimientos
   
- 
+  @staticmethod
+  def obtener_por_tipo_movimiento_rango_fecha(tipo, fecha_inicio, fecha_fin):
+    consulta = """SELECT movimientos.id, productos.nombre_producto, bodegas.nombre_bodega, movimientos.cantidad, movimientos.tipo_movimiento, movimientos.fecha, productos.precio_venta, precio_compra
+                  FROM movimientos, productos, bodegas
+                  WHERE movimientos.producto_id=productos.id and movimientos.bodega_id=bodegas.id and movimientos.tipo_movimiento=%s and fecha BETWEEN %s AND %s 
+              """
+    valores = (tipo, fecha_inicio+" 00:00:00", fecha_fin+" 23:59:59")
+    print((tipo, fecha_inicio, fecha_fin))
+    conexion_db = ConexionBaseDatos()
+    resultados = conexion_db.ejecutar_consulta(consulta, valores)
+    print(resultados)
+    movimientos = []
+    # self.id_producto = id_producto
+    # self.id_bodega = id_bodega
+    # self.cantidad = cantidad
+    # self.tipo_movimiento = tipo_movimiento
+    # self.fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    for resultado in resultados:
+      movimiento = Movimiento(resultado[1], resultado[2], resultado[3], resultado[4])
+      movimiento.id = resultado[0]
+      movimiento.fecha = resultado[5].strftime("%Y-%m-%d %H:%M:%S")
+      movimiento.precio_venta = resultado[6]
+      movimiento.total_venta = (resultado[6]*resultado[3])
+      movimiento.precio_compra = resultado[7]*resultado[3]
+      print(movimiento.tipo_movimiento)
+      movimientos.append(movimiento)
+    return movimientos
+
+  @staticmethod
+  def obtener_por_tipo_movimiento(tipo):
+    consulta = """SELECT movimientos.id, productos.nombre_producto, bodegas.nombre_bodega, movimientos.cantidad, movimientos.tipo_movimiento, movimientos.fecha, productos.precio_venta, productos.precio_compra
+                  FROM movimientos, productos, bodegas
+                  WHERE movimientos.producto_id=productos.id and movimientos.bodega_id=bodegas.id and movimientos.tipo_movimiento=%s
+              """
+    valores = (tipo,)
+    conexion_db = ConexionBaseDatos()
+    resultados = conexion_db.ejecutar_consulta(consulta, valores)
+    print(resultados)
+    movimientos = []
+    # self.id_producto = id_producto
+    # self.id_bodega = id_bodega
+    # self.cantidad = cantidad
+    # self.tipo_movimiento = tipo_movimiento
+    # self.fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    for resultado in resultados:
+      movimiento = Movimiento(resultado[1], resultado[2], resultado[3], resultado[4])
+      movimiento.id = resultado[0]
+      movimiento.fecha = resultado[5].strftime("%Y-%m-%d %H:%M:%S")
+      movimiento.precio_venta = resultado[6]
+      movimiento.total_venta = (resultado[6]*resultado[3])
+      movimiento.precio_compra = resultado[7]*resultado[3]
+      print(movimiento.tipo_movimiento)
+      movimientos.append(movimiento)
+    return movimientos

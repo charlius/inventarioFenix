@@ -1,63 +1,124 @@
 {% extends 'dashboard.html' %}
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-       
-
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Movimientos</h1>
-            <a href="/productos/crear_producto" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Nuevo Movimiento</a>
-            <form>   
-                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    </div>
-                    
-                    <input type="text" id="searchInput" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar Producto..." required>
-                    <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
-                </div>
-            </form>
-            <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">ID</th>
-                            <th scope="col" class="px-6 py-3">Nombre.</th>
-                            <th scope="col" class="px-6 py-3">Descripción</th>
-                            <th scope="col" class="px-6 py-3">Precio venta</th>
-                            <th scope="col" class="px-6 py-3">Stock</th>
-                            <th scope="col" class="px-6 py-3"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for producto in productos %}
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td class="px-6 py-4" >{{ producto.id }}</td>
-                                <td class="px-6 py-4" >{{ producto.nombre_producto }}</td>
-                                <td class="px-6 py-4" >{{ producto.descripcion }}</td>
-                                <td class="px-6 py-4" >{{ producto.precio_venta }}</td>
-                                <td class="px-6 py-4" >{{ producto.cantidad }}</td>
-                                <td class="px-6 py-4" ><a href="/productos/{{ producto.id }}/editar" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar</a></td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Buscar movimientos</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container mt-5">
+		<h1>Buscar movimientos</h1>
+		<form>
+			<div class="form-group">
+				<label for="tipo_movimiento">Tipo de movimiento:</label>
+				<select id="tipo_movimiento" name="tipo_movimiento" class="form-control">
+					<option value="todo">Todo</option>
+					<option value="entrada">Entrada</option>
+                    <option value="salida">Salida</option>
+				</select>
+			</div>
+            <div>
+                <label for="mi-checkbox">buscar por rango de fecha:</label>
+                <input type="checkbox" id="mi-checkbox">
             </div>
-            
-        </main>
-    </div>
-</div>
+            <div id="fechas" style="display:none;">
+                <div class="form-group">
+                    <label for="fecha_inicio">Fecha de inicio:</label>
+                    <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio">
+                </div>
+                <div class="form-group">
+                <label for="fecha_fin">Fecha de fin:</label>
+                <input type="date" class="form-control" id="fecha_fin" name="fecha_fin">
+                </div>
+            </div>
+            <button type="button" id="buscar" class="btn btn-primary">Buscar</button>
+            <label for="total_venta">total ventas:</label>
+            <input type="text" class="form-control-sm" id="total_venta" name="total_venta" disabled>
+            <label for="total_invertido">total invertido:</label>
+            <input type="text" class="form-control-sm" id="total_invertido" name="total_invertido" disabled>
+          <br>
+          <br>
+		</form>
+		<table id="tabla_movimientos" class="table table-striped">
+			<thead class="thead-light">
+				<tr>
+					<th>ID</th>
+					<th>producto</th>
+                    <th>precio venta</th>
+                    <th>precio compra</th>
+					<th>bodega</th>
+					<th>Cantidad</th>
+					<th>movimiento</th>
+					<th>fecha</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+        var total = 0
+		$(document).ready(function() {
+			$("#buscar").click(function() {
+				var tipo_movimiento = $("#tipo_movimiento").val();
+                var fecha_inicio = $("#fecha_inicio").val();
+                var fecha_fin = $("#fecha_fin").val();
+				$.ajax({
+					type: "POST",
+					url: "/movimientos",
+					data: {
+                        tipo_movimiento: tipo_movimiento,
+                        fecha_inicio: fecha_inicio,
+                        fecha_fin: fecha_fin
+                    },
+					dataType: "json",
+					success: function(data) {
+                        console.log(data)
+                        var total_venta = 0
+                        var total_invertido = 0
+						$("#tabla_movimientos tbody").empty();
+                        const total_venta_input = document.getElementById("total_venta");
+                        total_venta_input.value = 0
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $("#searchInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("table tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
+                        const total_invertido_input = document.getElementById("total_invertido");
+                        total_invertido_input.value = 0
+						$.each(data, function(index, value) {
+							$("#tabla_movimientos tbody").append("<tr><td>" + value.id + "</td><td>" + value.id_producto + "</td><td>" + value.precio_venta + "</td><td>" + value.precio_compra + "</td><td>" + value.id_bodega + "</td><td>" + value.cantidad + "</td><td>" + value.tipo_movimiento + "</td><td>" + value.fecha + "</td><</tr>");
+                            
+                            if (value.tipo_movimiento === "entrada"){
+                                console.log(value.precio_compra)
+                                total_invertido = total_invertido + value.precio_compra
+                                console.log(total_invertido)
+                                total_invertido_input.value = total_invertido
+                            }
+                            if(value.tipo_movimiento === "salida"){
+                                total_venta = total_venta + value.total_venta
+                                total_venta_input.value = total_venta
+                            }
+
+                        });
+					}
+				});
+                console.log(`total de la venta:`+total)
+			});
+		});
+	</script>
+     <script>
+		const miCheckbox = document.getElementById("mi-checkbox");
+        const miElemento = document.getElementById("fechas");
+        const fecha_inicio = document.getElementById("fecha_inicio");
+        const fecha_fin = document.getElementById("fecha_fin");
+
+        miCheckbox.addEventListener("change", function() {
+            if (this.checked) {
+                miElemento.style.display = "block";
+            } else {
+                miElemento.style.display = "none";
+                fecha_inicio.value = ""
+                fecha_fin.value = ""
+            }
         });
-    });
-</script>
+    </script>
 {% endblock %}
