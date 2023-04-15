@@ -352,5 +352,13 @@ def buscar_movimientos():
     if request.method == 'POST':
         print(print(request.form))
     return render_template('movimientos.html')
+
+@app.route('/entrada')
+def entrada():
+    return 'entrada.html'
+
+@app.route('/salida')
+def salida():
+    return 'salida.html'
 if __name__ == '__main__':
     app.run(debug=True)

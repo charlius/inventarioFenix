@@ -1,9 +1,9 @@
 {% extends 'dashboard.html' %}
 
 {% block content %}
-    <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Crear nuevo producto</h1>
+    <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Crear nuevo producto &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
     <br>
-    <form class="bg-white" method="POST" action="{{ url_for('crear_producto') }}">
+    <form class="bg-white flex flex-col relative overflow-x-auto" method="POST" action="{{ url_for('crear_producto') }}">
 
         <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="nombre" placelholder="Nombre">Nombre Producto</label>
