@@ -58,7 +58,8 @@ class Producto:
       cantidad=0,
       cantidad_minima=0,
       proveedor_id=0,
-      id_bodega=0
+      id_bodega=0,
+      categoria_id=0
 ):
     self.conexion_db = ConexionBaseDatos()
     self.id = None
@@ -70,15 +71,16 @@ class Producto:
     self.cantidad_minima = cantidad_minima
     self.proveedor_id = proveedor_id
     self.id_bodega = id_bodega
+    self.id_categoria = categoria_id
 
   def guardar(self):
-    consulta = "INSERT INTO productos (nombre_producto, descripcion, precio_compra, precio_venta, cantidad, cantidad_minima, proveedor_id, id_bodega) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-    valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega)
+    consulta = "INSERT INTO productos (nombre_producto, descripcion, precio_compra, precio_venta, cantidad, cantidad_minima, proveedor_id, id_bodega, id_categoria) VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s)"
+    valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega, self.id_categoria)
     self.conexion_db.ejecutar_consulta(consulta, valores)
 
   def editar(self):
-    consulta = "UPDATE productos SET nombre_producto=%s, descripcion=%s, precio_compra=%s, precio_venta=%s, cantidad=%s, cantidad_minima=%s, proveedor_id=%s, id_bodega=%s WHERE id=%s"
-    valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega, self.id)
+    consulta = "UPDATE productos SET nombre_producto=%s, descripcion=%s, precio_compra=%s, precio_venta=%s, cantidad=%s, cantidad_minima=%s, proveedor_id=%s, id_bodega=%s, id_categoria=%s WHERE id=%s"
+    valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega, self.id_categoria, self.id)
     self.conexion_db.ejecutar_consulta(consulta, valores)
 
   
@@ -104,7 +106,7 @@ class Producto:
     resultado = conexion_db.ejecutar_consulta(consulta, valores)
     producto = None
     if len(resultado) > 0:
-      producto = Producto(resultado[0][1], resultado[0][2], resultado[0][3], resultado[0][4], resultado[0][5], resultado[0][6],resultado[0][7],resultado[0][8])
+      producto = Producto(resultado[0][1], resultado[0][2], resultado[0][3], resultado[0][4], resultado[0][5], resultado[0][6],resultado[0][7],resultado[0][8],resultado[0][9])
       producto.id = resultado[0][0]
     return producto
   
@@ -162,10 +164,47 @@ class Bodega:
       bodega = Bodega(resultado[0][1], resultado[0][2])
       bodega.id = resultado[0][0]
     return bodega
+
+class Categoria:
+  def __init__(self, nombre):
+    self.conexion_db = ConexionBaseDatos()
+    self.id = None
+    self.nombre = nombre
+
+  def guardar(self):
+    consulta = "INSERT INTO categorias (nombre) VALUES (%s)"
+    valores = (self.nombre,)
+    self.conexion_db.ejecutar_consulta(consulta, valores)
+
+  def editar(self):
+    consulta = "UPDATE categorias SET nombre=%s WHERE id=%s"
+    valores = (self.nombre, self.id)
+    self.conexion_db.ejecutar_consulta(consulta, valores)
+
+  @staticmethod
+  def obtener_todos():
+    consulta = "SELECT * FROM categorias"
+    conexion_db = ConexionBaseDatos()
+    resultados = conexion_db.ejecutar_consulta(consulta)
+    categorias = []
+    for resultado in resultados:
+      categoria = Categoria(resultado[1])
+      categoria.id = resultado[0]
+      categorias.append(categoria)
+
+    return categorias
   
-  
-  
-  
+  @staticmethod
+  def obtener_por_id(id):
+    consulta = "SELECT * FROM categorias WHERE id=%s"
+    valores = (id,)
+    conexion_db = ConexionBaseDatos()
+    resultado = conexion_db.ejecutar_consulta(consulta, valores)
+    categoria = None
+    if len(resultado) > 0:
+      categoria = Categoria(resultado[0][1])
+      categoria.id = resultado[0][0]
+    return categoria
 
 
 class Usuario:
@@ -261,7 +300,8 @@ class Movimiento:
       movimiento.fecha = resultado[5].strftime("%Y-%m-%d %H:%M:%S")
       movimiento.precio_venta = resultado[6]
       movimiento.total_venta = (resultado[6]*resultado[3])
-      movimiento.precio_compra = resultado[7]*resultado[3]
+      movimiento.precio_compra = resultado[7]
+      movimiento.total_compra = (resultado[7]*resultado[3])
       print(movimiento.tipo_movimiento)
       movimientos.append(movimiento)
     return movimientos
@@ -330,7 +370,8 @@ class Movimiento:
       movimiento.fecha = resultado[5].strftime("%Y-%m-%d %H:%M:%S")
       movimiento.precio_venta = resultado[6]
       movimiento.total_venta = (resultado[6]*resultado[3])
-      movimiento.precio_compra = resultado[7]*resultado[3]
+      movimiento.precio_compra = resultado[7]
+      movimiento.total_compra = (resultado[7]*resultado[3])
       print(movimiento.tipo_movimiento)
       movimientos.append(movimiento)
     return movimientos
@@ -357,7 +398,8 @@ class Movimiento:
       movimiento.fecha = resultado[5].strftime("%Y-%m-%d %H:%M:%S")
       movimiento.precio_venta = resultado[6]
       movimiento.total_venta = (resultado[6]*resultado[3])
-      movimiento.precio_compra = resultado[7]*resultado[3]
+      movimiento.precio_compra = resultado[7]
+      movimiento.total_compra = (resultado[7]*resultado[3])
       print(movimiento.tipo_movimiento)
       movimientos.append(movimiento)
     return movimientos

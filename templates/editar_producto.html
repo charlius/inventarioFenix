@@ -39,6 +39,18 @@
             <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="cantidad_minima" name="cantidad_minima" value="{{ producto.cantidad_minima }}"required placeholder="Cantidad_minima">
         </div>
         <div class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="bodega_id">Categoria Id</label>
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="categoria_id" name="categoria_id" required placeholder="categoria_id">
+                {% for categoria in categorias %}
+                    {% if producto.id_categoria == categoria.id %}
+                        <option selected="selected" value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+                    {% else %}
+                        <option  value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="bodega_id">Bodega Id</label>
             <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="bodega_id" name="bodega_id" required placeholder="Bodega_id">
                 {% for bodega in bodegas %}
@@ -51,10 +63,14 @@
             </select>
         </div>
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="proveedor_id">Proveedor Id</label>
-            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="proveedor_id" name="proveedor_id" required>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="proveedor_id">proveedor Id</label>
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="proveedor_id" name="proveedor_id" required placeholder="proveedor_id">
                 {% for proveedor in proveedores %}
-                    <option value="{{ proveedor.id }}">{{ proveedor.nombre_proveedor }}</option>
+                    {% if producto.proveedor_id == proveedor.id %}
+                        <option selected="selected" value="{{ proveedor.id }}">{{ proveedor.nombre_proveedor }}</option>
+                    {% else %}
+                        <option  value="{{ proveedor.id }}">{{ proveedor.nombre_proveedor }}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
         </div>
