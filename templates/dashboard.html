@@ -66,53 +66,79 @@
     </nav>
     <br>
 
-
-  
-
-    <div class="w-4/5 h-full mx-auto relative bg-white bg-opacity-25 backdrop-filter backdrop-blur-lg border-4 border-white border-opacity-25 shadow-md rounded-lg">
-   
-     <div class="container mt-5">
-      {% block content %}
-      <div>
-        <div id="clock">
-          <span class="font-extrabold" id="time"></span>
-          <br>
-          <span class="font-extrabold" id="date"></span>
+    <div class="grid gap-2 justify-items-center items-center ">
+      
+        <!-- Contenido de la columna 1 -->
+        <div class="flex flex-flex  ">
+          <div class="w-48 bg-gray-800 text-gray-100 py-8 ">
+            <div class="flex flex-col  ">
+              <h2 class="text-xl font-bold dark:text-white text-center">Movimientos</h2>
+              <a class="justify-items-center items-center text-white  from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm py-2.5 text-center " href="{{ url_for('entrada') }}">Entrada</a>
+              <br>
+              <a class="justify-items-center items-center text-white  from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm  py-2.5 text-center " href="{{ url_for('salida') }}">Salida</a>
+              
+            </div>
+          </div>
+          <div class="">
+            <!-- Contenido principal aquí -->
+            <div class="w-full h-full mx-auto relative bg-white bg-opacity-25 backdrop-filter backdrop-blur-lg border-4 border-white border-opacity-25 shadow-md rounded-lg">
+              {% block content %}
+      
+              <div class="container mt-5">
+               
+              
+         
+               
+         
+               <div>
+                 <div id="clock">
+                   <span class="font-extrabold" id="time"></span>
+                   <br>
+                   <span class="font-extrabold" id="date"></span>
+                 </div>
+               </div>
+               <h1 class="titulo text-2xl font-bold text-gray-900 sm:text-3xl font-bold">Productos con Stock minimo</h1>
+         
+               <div class="relative overflow-x-auto ">
+               <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 " id="table">
+                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
+                 <tr class="">
+                   <th>ID</th>
+                   <th>Nombre</th>
+                   <th>Descripción</th>
+                   <th class="text-red-500">Cantidad</th>
+                   <th class="">Cantidad mínima</th>
+                   <th>Ajustar cantidad</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 {% for producto in productos %}
+                   <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                     <td class="font-bold bg-white">{{ producto[0] }}</td>
+                     <td class="font-bold bg-white">{{ producto[1] }}</td>
+                     <td class="font-bold bg-white">{{ producto[2] }}</td>
+                     <td class="text-red-500 font-bold bg-white">{{ producto[5] }}</td>
+                     <td class="font-bold bg-white">{{ producto[6] }}</td>
+                     <td class="px-6 py-4 font-bold bg-white"><a href="/productos/{{ producto[0] }}/editar" class=" text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ajustar cantidad</a></td>
+                   </tr>
+                 </tbody>
+                 {% endfor %}
+               </table>
+             </div>
+             {% endblock %}
+               </div>
+               <br>
+         
+              </div>
+          </div>
         </div>
-      </div>
-      <h1 class="titulo text-2xl font-bold text-gray-900 sm:text-3xl font-bold">Productos con Stock minimo</h1>
-
-      <div class="relative overflow-x-auto">
-      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 " id="table">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
-        <tr class="">
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th class="text-red-500">Cantidad</th>
-          <th class="">Cantidad mínima</th>
-          <th>Ajustar cantidad</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for producto in productos %}
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td class="font-bold bg-white">{{ producto[0] }}</td>
-            <td class="font-bold bg-white">{{ producto[1] }}</td>
-            <td class="font-bold bg-white">{{ producto[2] }}</td>
-            <td class="text-red-500 font-bold bg-white">{{ producto[5] }}</td>
-            <td class="font-bold bg-white">{{ producto[6] }}</td>
-            <td class="px-6 py-4 font-bold bg-white"><a href="/productos/{{ producto[0] }}/editar" class=" text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ajustar cantidad</a></td>
-          </tr>
-        </tbody>
-        {% endfor %}
-      </table>
+      
+      
     </div>
-    {% endblock %}
-      </div>
-      <br>
 
-     </div>
+    
+
+    
      <style>
       #clock {
     text-align: center;

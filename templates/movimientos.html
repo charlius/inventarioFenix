@@ -1,5 +1,5 @@
 {% extends 'dashboard.html' %}
-{% block content %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,50 +7,56 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-	<div class="container mt-5">
-		<h1>Buscar movimientos</h1>
+    {% block content %}
+	<div class="col-md-9 ml-sm-auto col-lg-10 px-4">
+		<h1 class="text-4xl font-bold dark:text-white">Buscar movimientos</h1>
+        <br>
 		<form>
 			<div class="form-group">
-				<label for="tipo_movimiento">Tipo de movimiento:</label>
-				<select id="tipo_movimiento" name="tipo_movimiento" class="form-control">
-					<option value="todo">Todo</option>
-					<option value="entrada">Entrada</option>
-                    <option value="salida">Salida</option>
+				<label class="font-bold " for="tipo_movimiento font-bold">Tipo de movimiento:</label>
+                <br>
+				<select id="tipo_movimiento" name="tipo_movimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+					<option class="font-bold" value="todo">Todos</option>
+					<option class="font-bold" value="entrada">Entrada</option>
+                    <option class="font-bold" value="salida">Salida</option>
 				</select>
 			</div>
+            <br>
             <div>
-                <label for="mi-checkbox">buscar por rango de fecha:</label>
+                <label class="font-bold" for="mi-checkbox">Buscar por rango de fecha:</label>
                 <input type="checkbox" id="mi-checkbox">
             </div>
+            <br>
             <div id="fechas" style="display:none;">
                 <div class="form-group">
-                    <label for="fecha_inicio">Fecha de inicio:</label>
-                    <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio">
+                    <label class="font-bold" for="fecha_inicio">Fecha de inicio:</label>
+                    <input type="date" class="font-bold" id="fecha_inicio" name="fecha_inicio">
                 </div>
                 <div class="form-group">
-                <label for="fecha_fin">Fecha de fin:</label>
+                <label class="font-bold" for="fecha_fin">Fecha de fin:</label>
                 <input type="date" class="form-control" id="fecha_fin" name="fecha_fin">
                 </div>
             </div>
-            <button type="button" id="buscar" class="btn btn-primary">Buscar</button>
-            <label for="total_venta">total ventas:</label>
-            <input type="text" class="form-control-sm" id="total_venta" name="total_venta" disabled>
-            <label for="total_invertido">total invertido:</label>
-            <input type="text" class="form-control-sm" id="total_invertido" name="total_invertido" disabled>
+            <button type="button" id="buscar" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Buscar</button>
+            <br>
+            <label class="font-bold" for="total_venta">Total ventas:</label>
+            <input type="text" class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="total_venta" name="total_venta" disabled>
+            <label class="font-bold" for="total_invertido">Total invertido:</label>
+            <input type="text" class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="total_invertido" name="total_invertido" disabled>
           <br>
           <br>
 		</form>
-		<table id="tabla_movimientos" class="table table-striped">
-			<thead class="thead-light">
+		<table id="tabla_movimientos" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+			<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 				<tr>
-					<th>ID</th>
-					<th>producto</th>
-                    <th>precio venta</th>
-                    <th>precio compra</th>
-					<th>bodega</th>
-					<th>Cantidad</th>
-					<th>movimiento</th>
-					<th>fecha</th>
+					<th scope="col" class="px-6 py-3">ID</th>
+					<th scope="col" class="px-6 py-3">producto</th>
+                    <th scope="col" class="px-6 py-3">precio venta</th>
+                    <th scope="col" class="px-6 py-3">precio compra</th>
+					<th scope="col" class="px-6 py-3">bodega</th>
+					<th scope="col" class="px-6 py-3">Cantidad</th>
+					<th scope="col" class="px-6 py-3">movimiento</th>
+					<th scope="col" class="px-6 py-3">fecha</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -85,16 +91,17 @@
                         const total_invertido_input = document.getElementById("total_invertido");
                         total_invertido_input.value = 0
 						$.each(data, function(index, value) {
-							$("#tabla_movimientos tbody").append("<tr><td>" + value.id + "</td><td>" + value.id_producto + "</td><td>" + value.precio_venta + "</td><td>" + value.precio_compra + "</td><td>" + value.id_bodega + "</td><td>" + value.cantidad + "</td><td>" + value.tipo_movimiento + "</td><td>" + value.fecha + "</td><</tr>");
+							$("#tabla_movimientos tbody").append("<tr><td class='bg-white font-bold px-6'>" + value.id + "</td><td class='bg-white font-bold px-6'>" + value.id_producto + "</td class='bg-white font-bold px-6'><td class='bg-white font-bold px-6'>" + value.precio_venta + "</td class='bg-white font-bold px-6'><td class='bg-white font-bold px-6'>" + value.precio_compra + "</td class='bg-white font-bold px-6'><td class='bg-white font-bold px-6'>" + value.id_bodega + "</td><td class='bg-white font-bold px-6'>" + value.cantidad + "</td><td class='bg-white font-bold px-6'>" + value.tipo_movimiento + "</td><td class='bg-white font-bold'>" + value.fecha + "</td><</tr>");
+
                             if (value.tipo_movimiento === "entrada"){
                                 console.log(value.precio_compra)
                                 total_invertido = total_invertido + value.total_compra
                                 console.log(total_invertido)
-                                total_invertido_input.value = total_invertido
+                                total_invertido_input.value = '$'+total_invertido
                             }
                             if(value.tipo_movimiento === "salida"){
                                 total_venta = total_venta + value.total_venta
-                                total_venta_input.value = total_venta
+                                total_venta_input.value = '$'+total_venta
                             }
 
                         });

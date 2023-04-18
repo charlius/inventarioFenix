@@ -405,5 +405,104 @@ def buscar_movimientos():
     if request.method == 'POST':
         print(print(request.form))
     return render_template('movimientos.html')
+
+@app.route('/entrada')
+def entrada():
+    if 'usuario' in session:
+        usuario = Usuario.obtener_por_email(session['usuario'])
+        productos = Producto.obtener_todos()
+
+        # incluir variable en la respuesta
+        return render_template('entrada.html', usuario=usuario, productos=productos)
+    else:
+        return redirect('/')
+    
+@app.route('/productos/<int:producto_id>/ajustar_cantidad', methods=['GET', 'POST'])
+def ajustar_producto(producto_id=0):
+    if 'usuario' not in session:
+        return redirect('/')
+    producto = Producto.obtener_por_id(producto_id)
+    if not producto:
+        return redirect('/productos')
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        descripcion = request.form['descripcion']
+        proveedor_id = request.form['proveedor_id']
+        id_bodega = request.form['bodega_id']
+        cantidad = request.form['existencia']
+        cantidad_minima = request.form['cantidad_minima']
+        precio_compra = request.form['precio_compra']
+        precio_venta = request.form['precio_venta']
+
+        producto_edit = Producto(
+           nombre_producto=nombre,
+           descripcion=descripcion,
+           precio_compra=precio_compra,
+           precio_venta=precio_venta,
+           cantidad=cantidad,
+           cantidad_minima=cantidad_minima,
+           proveedor_id=proveedor_id,
+           id_bodega=id_bodega
+        )
+        producto_edit.id = producto_id
+        print(producto_edit.id)
+
+        producto_edit.editar()
+        return redirect('/productos')
+    proveedores = Proveedor.obtener_todos()
+    bodegas = Bodega.obtener_todos()
+    return render_template('ajustar_producto.html', producto=producto, proveedores=proveedores, bodegas=bodegas)
+
+@app.route('/salida')
+def salida():
+    if 'usuario' in session:
+        usuario = Usuario.obtener_por_email(session['usuario'])
+        productos = Producto.obtener_todos()
+
+        # incluir variable en la respuesta
+        return render_template('salida.html', usuario=usuario, productos=productos)
+    else:
+        return redirect('/')
+    
+@app.route('/productos/<int:producto_id>/salida_producto', methods=['GET', 'POST'])
+def ajustar_salida(producto_id=0):
+    if 'usuario' not in session:
+        return redirect('/')
+    producto = Producto.obtener_por_id(producto_id)
+    if not producto:
+        return redirect('/productos')
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        descripcion = request.form['descripcion']
+        proveedor_id = request.form['proveedor_id']
+        id_bodega = request.form['bodega_id']
+        cantidad = request.form['existencia']
+        cantidad_minima = request.form['cantidad_minima']
+        precio_compra = request.form['precio_compra']
+        precio_venta = request.form['precio_venta']
+
+        producto_edit = Producto(
+           nombre_producto=nombre,
+           descripcion=descripcion,
+           precio_compra=precio_compra,
+           precio_venta=precio_venta,
+           cantidad=cantidad,
+           cantidad_minima=cantidad_minima,
+           proveedor_id=proveedor_id,
+           id_bodega=id_bodega
+        )
+        producto_edit.id = producto_id
+        print(producto_edit.id)
+
+        producto_edit.editar()
+        return redirect('/productos')
+    proveedores = Proveedor.obtener_todos()
+    bodegas = Bodega.obtener_todos()
+    return render_template('ajustar_salida.html', producto=producto, proveedores=proveedores, bodegas=bodegas)
+
+# #####################################3
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
