@@ -1,7 +1,7 @@
 import json
 from werkzeug.security import check_password_hash
 from flask import Flask, jsonify, render_template, request, redirect, session
-from src.gestion_inventario_db import Bodega, Movimiento, Producto, Proveedor, Usuario
+from src.gestion_inventario_db import Bodega, Categoria, Movimiento, Producto, Proveedor, Usuario
 
 
 
@@ -92,6 +92,7 @@ def crear_producto():
         cantidad_minima = request.form['cantidad_minima']
         precio_compra = request.form['precio_compra']
         precio_venta = request.form['precio_venta']
+        id_categoria = request.form['categoria_id']
         nuevo_producto = Producto(
            nombre_producto=nombre,
            descripcion=descripcion,
@@ -100,13 +101,16 @@ def crear_producto():
            cantidad=cantidad,
            cantidad_minima=cantidad_minima,
            proveedor_id=proveedor_id,
-           id_bodega=id_bodega
+           id_bodega=id_bodega,
+           id_categoria=id_categoria
         )
         nuevo_producto.guardar()
         return redirect('/productos')
+    categorias = Categoria.obtener_todos()
+    print(categorias)
     proveedores = Proveedor.obtener_todos()
     bodegas = Bodega.obtener_todos()
-    return render_template('crear_producto.html', proveedores=proveedores, bodegas=bodegas)
+    return render_template('crear_producto.html', proveedores=proveedores, bodegas=bodegas, categorias=categorias)
 
 
 @app.route('/productos/<int:producto_id>/editar', methods=['GET', 'POST'])
@@ -117,6 +121,7 @@ def editar_producto(producto_id=0):
     if not producto:
         return redirect('/productos')
     if request.method == 'POST':
+        print(request.form)
         nombre = request.form['nombre']
         descripcion = request.form['descripcion']
         proveedor_id = request.form['proveedor_id']
@@ -125,6 +130,7 @@ def editar_producto(producto_id=0):
         cantidad_minima = request.form['cantidad_minima']
         precio_compra = request.form['precio_compra']
         precio_venta = request.form['precio_venta']
+        categoria_id = request.form['categoria_id']
 
         producto_edit = Producto(
            nombre_producto=nombre,
@@ -134,16 +140,18 @@ def editar_producto(producto_id=0):
            cantidad=cantidad,
            cantidad_minima=cantidad_minima,
            proveedor_id=proveedor_id,
-           id_bodega=id_bodega
+           id_bodega=id_bodega,
+           categoria_id=categoria_id
         )
         producto_edit.id = producto_id
-        print(producto_edit.id)
 
         producto_edit.editar()
         return redirect('/productos')
+    categorias = Categoria.obtener_todos()
     proveedores = Proveedor.obtener_todos()
     bodegas = Bodega.obtener_todos()
-    return render_template('editar_producto.html', producto=producto, proveedores=proveedores, bodegas=bodegas)
+    print(print(f"id cat: {producto.id_categoria}"))
+    return render_template('editar_producto.html', producto=producto, proveedores=proveedores, bodegas=bodegas, categorias=categorias)
 
 
 @app.route('/filtrar', methods=['GET'])
@@ -212,6 +220,51 @@ def crear_proveedor():
         return redirect('/proveedores')
     return render_template('crear_proveedor.html')
 
+@app.route('/categorias')
+def categorias():
+    if 'usuario' in session:
+        usuario = Usuario.obtener_por_email(session['usuario'])
+        categorias = Categoria.obtener_todos()
+
+        # incluir variable en la respuesta
+        return render_template('categorias.html', usuario=usuario, categorias=categorias)
+    else:
+        return redirect('/')
+
+@app.route('/categoria/crear_categoria', methods=['GET', 'POST'])
+def crear_categoria():
+    if 'usuario' not in session:
+        return redirect('/')
+    if request.method == 'POST':
+        print("hola")
+        nombre_categoria = request.form['nombre_categoria']
+
+        nueva_categoria = Categoria(
+           nombre=nombre_categoria
+          )
+        nueva_categoria.guardar()
+        return redirect('/categorias')
+    return render_template('crear_categorias.html')
+
+@app.route('/categorias/<int:categoria_id>/editar', methods=['GET', 'POST'])
+def editar_categorias(categoria_id=0):
+    if 'usuario' not in session:
+        return redirect('/')
+    categoria = Categoria.obtener_por_id(categoria_id)
+    if not categoria:
+        return redirect('/categorias')
+    if request.method == 'POST':
+        nombre = request.form['nombre_categoria']
+
+        categoria_edit = Categoria(
+           nombre=nombre
+        )
+        categoria_edit.id = categoria_id
+        print(categoria_edit.id)
+
+        categoria_edit.editar()
+        return redirect('/categorias')
+    return render_template('editar_categorias.html', categoria=categoria)
 
 @app.route('/bodegas')
 def bodegas():

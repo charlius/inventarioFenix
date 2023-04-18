@@ -92,10 +92,10 @@
                         total_invertido_input.value = 0
 						$.each(data, function(index, value) {
 							$("#tabla_movimientos tbody").append("<tr><td class='bg-white font-bold px-6'>" + value.id + "</td><td class='bg-white font-bold px-6'>" + value.id_producto + "</td class='bg-white font-bold px-6'><td class='bg-white font-bold px-6'>" + value.precio_venta + "</td class='bg-white font-bold px-6'><td class='bg-white font-bold px-6'>" + value.precio_compra + "</td class='bg-white font-bold px-6'><td class='bg-white font-bold px-6'>" + value.id_bodega + "</td><td class='bg-white font-bold px-6'>" + value.cantidad + "</td><td class='bg-white font-bold px-6'>" + value.tipo_movimiento + "</td><td class='bg-white font-bold'>" + value.fecha + "</td><</tr>");
-                            
+
                             if (value.tipo_movimiento === "entrada"){
                                 console.log(value.precio_compra)
-                                total_invertido = total_invertido + value.precio_compra
+                                total_invertido = total_invertido + value.total_compra
                                 console.log(total_invertido)
                                 total_invertido_input.value = '$'+total_invertido
                             }
