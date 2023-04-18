@@ -1,0 +1,72 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+
+<h2 class="text-4xl font-bold dark:text-white">Ajustar salida de Productos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<br>
+    <form class="bg-white" method="POST" action="">
+
+        
+        <div class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="nombre">Nombre producto</label>
+            <input type="text" readonly class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="nombre" name="nombre" value="{{ producto.nombre_producto }}" required placeholder="Nombre">
+        </div>
+        <div class="mb-6">
+            <label class=" block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="descripcion">Descripción</label>
+            <input type="text" readonly class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="descripcion" name="descripcion" value="{{ producto.descripcion }}" required placeholder="Descripción">
+        </div>
+       
+        <div class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="existencia">Existencia</label>
+            <input type="number" readonly class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="existencia" name="existencia" value="{{ producto.cantidad }}"required placeholder="Existencia">
+        </div>
+
+        <div class="mb-6 destacado">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="existencia">Ajustar cantidad de salida de productos</label>
+            <input type="number" class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="existencia" name="existencia" value="{{ producto.cantidad }}"required placeholder="ajustar Existencia nueva">
+        </div>
+       
+       
+        
+        <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar</button>
+    </form>
+    <script>
+		const miCheckbox = document.getElementById("mi-checkbox");
+        const miElemento = document.getElementById("por_venta");
+        const precio_venta = document.getElementById("precio_venta")
+        const precio_compra = document.getElementById("precio_compra")
+        const porcentaje_venta = document.getElementById("porcentaje_venta")
+
+        miCheckbox.addEventListener("change", function() {
+            if (precio_compra.value === ""){
+
+                alert("aun no ingresas precio de compra")
+                this.checked = false
+                console.log(precio_compra.value === "")
+                console.log(precio_compra.value)
+                console.log(this.checked)
+            }
+
+            if (this.checked) {
+                miElemento.style.display = "block";
+                precio_venta.value = 0
+                precio_venta.disabled = true;
+            } else {
+                miElemento.style.display = "none";
+                precio_venta.disabled = false;
+            }
+        });
+
+        //calculo del porcentaje de venta
+        porcentaje_venta.addEventListener("input", function() {
+        const valorPorcentaje = parseFloat(porcentaje_venta.value);
+        const valorInput = parseFloat(precio_compra.value);
+        if (!isNaN(valorPorcentaje) && !isNaN(valorInput)) {
+            const resultado = valorInput * (valorPorcentaje / 100);
+            precio_venta.value = parseInt(valorInput) + parseInt(resultado.toFixed(2)); // setear el resultado en el tercer input
+        } else {
+            precio_venta.value = ""; // vaciar el tercer input si alguno de los valores no es un número
+        }
+        });
+	</script>
+{% endblock %}
