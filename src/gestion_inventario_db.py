@@ -81,6 +81,8 @@ class Producto:
     valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega, self.id)
     self.conexion_db.ejecutar_consulta(consulta, valores)
 
+ 
+
   
 
   @staticmethod
