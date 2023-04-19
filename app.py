@@ -33,6 +33,8 @@ def login():
     return render_template('index.html', mensaje='Correo electrónico o contraseña incorrectos')
 
 
+
+
 @app.route('/dashboard')
 def dashboard():
   if 'usuario' in session:
