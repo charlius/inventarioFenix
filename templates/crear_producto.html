@@ -1,7 +1,7 @@
 {% extends 'dashboard.html' %}
 
 {% block content %}
-    <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Crear nuevo producto &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+    <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Crear nuevo producto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
     <br>
     <form class="bg-white flex flex-col relative overflow-x-auto" method="POST" action="{{ url_for('crear_producto') }}">
 
@@ -38,7 +38,7 @@
         </div>
         <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="bodega_id">categoria_id</label>
-            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="categoria_id" name="categoria_id" required placeholder="categoria">
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="categoria_id" name="categoria_id" required placeholder="categoria" value="">
                 {% for categoria in categorias %}
                     <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
                 {% endfor %}

@@ -70,7 +70,7 @@ def logout():
 
 @app.route('/productos')
 def productos():
-    if 'usuario' in session and "administrado" in session:
+    if 'usuario' in session and "administrador" in session['tipo_usuario']:
         usuario = Usuario.obtener_por_email(session['usuario'])
         productos = Producto.obtener_todos()
 
@@ -82,9 +82,10 @@ def productos():
 
 @app.route('/productos/crear_producto', methods=['GET', 'POST'])
 def crear_producto():
-    if 'usuario' not in session and "administrador" not in session:
+    if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
     if request.method == 'POST':
+        print(request.form)
         nombre = request.form['nombre']
         descripcion = request.form['descripcion']
         proveedor_id = request.form['proveedor_id']
@@ -103,7 +104,7 @@ def crear_producto():
            cantidad_minima=cantidad_minima,
            proveedor_id=proveedor_id,
            id_bodega=id_bodega,
-           id_categoria=id_categoria
+           categoria_id=id_categoria
         )
         nuevo_producto.guardar()
         return redirect('/productos')
@@ -115,7 +116,7 @@ def crear_producto():
 
 @app.route('/productos/<int:producto_id>/editar', methods=['GET', 'POST'])
 def editar_producto(producto_id=0):
-    if 'usuario' not in session and "administrador" not in session:
+    if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
     producto = Producto.obtener_por_id(producto_id)
     usuario = Usuario.obtener_por_email(session['usuario'])
@@ -182,14 +183,14 @@ def traer_stock_minimo():
 
 @app.route('/proveedores')
 def proveedores():
-  if 'usuario' not in session and "administrador" not in session:
+  if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
   proveedores = Proveedor.obtener_todos()
   return render_template('proveedor.html', proveedores=proveedores)
 
 @app.route('/proveedores/<int:proveedor_id>/editar', methods=['GET', 'POST'])
 def editar_proveedor(proveedor_id=0):
-    if 'usuario' not in session and "administrador" not in session:
+    if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
     proveedor = Proveedor.obtener_por_id(proveedor_id)
     if not proveedor:
@@ -212,7 +213,7 @@ def editar_proveedor(proveedor_id=0):
 
 @app.route('/proveedores/crear_proveedor', methods=['GET', 'POST'])
 def crear_proveedor():
-    if 'usuario' not in session and "administrador" not in session:
+    if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -232,7 +233,7 @@ def crear_proveedor():
 
 @app.route('/categorias')
 def categorias():
-    if 'usuario' in session and "administrado" in session:
+    if 'usuario' in session and "administrador" in session['tipo_usuario']:
         usuario = Usuario.obtener_por_email(session['usuario'])
         categorias = Categoria.obtener_todos()
 
@@ -243,7 +244,7 @@ def categorias():
 
 @app.route('/categoria/crear_categoria', methods=['GET', 'POST'])
 def crear_categoria():
-    if 'usuario' not in session and "administrador" not in session:
+    if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
     if request.method == 'POST':
         nombre_categoria = request.form['nombre_categoria']
@@ -257,7 +258,7 @@ def crear_categoria():
 
 @app.route('/categorias/<int:categoria_id>/editar', methods=['GET', 'POST'])
 def editar_categorias(categoria_id=0):
-    if 'usuario' not in session and "administrador" not in session:
+    if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
     categoria = Categoria.obtener_por_id(categoria_id)
     if not categoria:
@@ -276,7 +277,7 @@ def editar_categorias(categoria_id=0):
 
 @app.route('/bodegas')
 def bodegas():
-    if 'usuario' in session and "administrado" in session:
+    if 'usuario' in session and "administrador" in session['tipo_usuario']:
         usuario = Usuario.obtener_por_email(session['usuario'])
         bodegas = Bodega.obtener_todos()
 
@@ -287,7 +288,7 @@ def bodegas():
     
 @app.route('/bodega/crear_bodega', methods=['GET', 'POST'])
 def crear_bodega():
-    if 'usuario' not in session and "administrador" not in session:
+    if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
     if request.method == 'POST':
         nombre_bodega = request.form['nombre_bodega']
@@ -303,7 +304,7 @@ def crear_bodega():
 
 @app.route('/bodegas/<int:bodega_id>/editar', methods=['GET', 'POST'])
 def editar_bodega(bodega_id=0):
-    if 'usuario' not in session and "administrador" not in session:
+    if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
     bodega = Bodega.obtener_por_id(bodega_id)
     if not bodega:
@@ -324,7 +325,7 @@ def editar_bodega(bodega_id=0):
 
 @app.route('/usuarios')
 def usuarios():
-    if 'usuario' not in session and "administrador" not in session:
+    if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
 
         # incluir variable en la respuesta
@@ -333,7 +334,7 @@ def usuarios():
 
 @app.route('/usuario/crear_usuario', methods=['GET', 'POST'])
 def crear_usuario():
-    if 'usuario' not in session and "administrador" not in session:
+    if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
     if request.method == 'POST':
         nombre_usuario = request.form['nombre_usuario']
@@ -351,7 +352,7 @@ def crear_usuario():
 
 @app.route('/usuario/<id>/editar', methods=['GET', 'POST'])
 def editar_usuario(id=0):
-    if 'usuario' not in session and "administrador" not in session:
+    if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
     usuario = Usuario.obtener_por_id(id)
 
@@ -416,7 +417,7 @@ def buscar_movimientos():
 
 @app.route('/entrada')
 def entrada():
-    if 'usuario' in session and "administrador" in session:
+    if 'usuario' in session and "administrador" in session['tipo_usuario']:
         usuario = Usuario.obtener_por_email(session['usuario'])
         productos = Producto.obtener_todos()
 
@@ -473,7 +474,7 @@ def salida():
     
 @app.route('/entradas')
 def entradas():
-    if 'usuario' in session and "administrador" in session:
+    if 'usuario' in session and "administrador" in session['tipo_usuario']:
         usuario = Usuario.obtener_por_email(session['usuario'])
         productos = Producto.obtener_todos()
 

@@ -27,13 +27,12 @@
           </a>
           <div class="flex items-center">
             <!-- <a href="{{ url_for('logout') }}" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" onclick="return confirm('¿Está seguro que desea cerrar sesión?') " >❌salir</a> -->
-            <a href="{{ url_for('logout') }}" class="text-sm text-blue-600 dark:text-blue-500 hover:underline" onclick="return confirm('¿Está seguro que desea cerrar sesión?', 'Cerrar sesión', 'Sí', 'No')">
+            <a href="{{ url_for('logout') }}" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" onclick="return confirm('¿Está seguro que desea cerrar sesión?', 'Cerrar sesión', 'Sí', 'No')">
               ❌Salir
+              <span class="text-sm text-blue-600 dark:text-blue-500 hover:">{{ session['nombre_usuario'] }} </span>
             </a>
           </div>
-          <div class="flex items-center">
-            <p  class="text-sm text-blue-600 dark:text-blue-500 hover:underline">{{ session['nombre_usuario'] }} </p>
-          </div>
+         
           <button class="flex items-center block px-3 py-2 text-gray-500 border border-gray-600 rounded md:hidden" id="hamburgerBtn">
               <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
                   <path id="hamburgerIcon" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -105,7 +104,7 @@
                    <span class="font-extrabold" id="date"></span>
                  </div>
                </div>
-               <h1 class="titulo text-2xl font-bold text-gray-900 sm:text-3xl font-bold">Productos con Stock minimo</h1>
+               <h1 class="titulo text-2xl font-bold text-gray-900 sm:text-3xl font-bold">Productos con Stock minimo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
          
                <div class="relative overflow-x-auto ">
                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 " id="table">
@@ -127,7 +126,7 @@
                      <td class="font-bold bg-white">{{ producto[2] }}</td>
                      <td class="text-red-500 font-bold bg-white">{{ producto[5] }}</td>
                      <td class="font-bold bg-white">{{ producto[6] }}</td>
-                     <td class="px-6 py-4 font-bold bg-white"><a href="/productos/{{ producto[0] }}/editar" class=" text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ajustar cantidad</a></td>
+                     <td class="px-6 py-4 font-bold bg-white"><a href="/productos/{{ producto[0] }}/salida_producto" class=" text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ajustar cantidad</a></td>
                    </tr>
                  </tbody>
                  {% endfor %}
@@ -240,86 +239,4 @@
       display: inline-block;
     }
   </style>
-<<<<<<< HEAD
-=======
-
-  <script>
-    function updateTime() {
-      var now = new Date();
-      var hours = now.getHours();
-      var minutes = now.getMinutes();
-      var seconds = now.getSeconds();
-      var day = now.getDate();
-      var month = now.getMonth() + 1;
-      var year = now.getFullYear();
-
-      // Agrega un 0 antes si el número es menor que 10
-      if (hours < 10) {
-        hours = "0" + hours;
-      }
-      if (minutes < 10) {
-        minutes = "0" + minutes;
-      }
-      if (seconds < 10) {
-        seconds = "0" + seconds;
-      }
-      if (day < 10) {
-        day = "0" + day;
-      }
-      if (month < 10) {
-        month = "0" + month;
-      }
-
-      // Actualiza la hora y fecha en la página
-      document.getElementById("time").innerHTML = hours + ":" + minutes + ":" + seconds;
-      document.getElementById("date").innerHTML = day + "/" + month + "/" + year;
-    }
-
-    // Actualiza la hora cada segundo
-    setInterval(updateTime, 1000);
-  </script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-   <script>
-    $(document).ready(function() {
-        var tabla = $('#table').DataTable({
-            "pagingType": "full_numbers",
-            "pageLength": 10,
-            "lengthMenu": [10, 25, 50],
-            "searching": true,
-            "language": {
-"sProcessing": "Procesando...",
-"sLengthMenu": "Mostrar _MENU_ registros",
-"sZeroRecords": "No se encontraron resultados",
-"sEmptyTable": "Ningún dato disponible en esta tabla",
-"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-"sInfoPostFix": "",
-"sSearch": "Buscar:",
-"sUrl": "",
-"sInfoThousands": ",",
-"sLoadingRecords": "Cargando...",
-"oPaginate": {
-    "sFirst": "Primero",
-    "sLast": "Último",
-    "sNext": "Siguiente",
-    "sPrevious": "Anterior"
-},
-"oAria": {
-    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-}
-}
-
-        });
-        
-        $('#searchInput').on('keyup', function() {
-            tabla.search(this.value).draw();
-        });
-        });
-</script>
-
-
->>>>>>> master
 </html>
