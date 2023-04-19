@@ -13,6 +13,5 @@ class ConexionBaseDatos:
   def ejecutar_consulta(self, consulta, valores=None):
     self.cursor.execute(consulta, valores) if valores else self.cursor.execute(consulta)
     self.conexion.commit()
-    print("paso")
     if "SELECT" in consulta:
       return self.cursor.fetchall()

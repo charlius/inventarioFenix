@@ -30,8 +30,9 @@
             <a href="{{ url_for('logout') }}" class="text-sm text-blue-600 dark:text-blue-500 hover:underline" onclick="return confirm('¿Está seguro que desea cerrar sesión?', 'Cerrar sesión', 'Sí', 'No')">
               ❌Salir
             </a>
-
-              
+          </div>
+          <div class="flex items-center">
+            <p  class="text-sm text-blue-600 dark:text-blue-500 hover:underline">{{ session['nombre_usuario'] }} </p>
           </div>
           <button class="flex items-center block px-3 py-2 text-gray-500 border border-gray-600 rounded md:hidden" id="hamburgerBtn">
               <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -47,6 +48,7 @@
                   <li>
                       <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
                   </li>
+                  {% if session['tipo_usuario'] == "administrador"%}
                   <li>
                       <a class="nav-link" href="{{ url_for('productos') }}">Productos</a>
                   </li>
@@ -59,12 +61,15 @@
                   <li>
                       <a class="nav-link" href="{{ url_for('usuarios') }}">Usuarios</a>
                   </li>
+                  {% endif %}
                   <li>
                       <a class="nav-link" href="{{ url_for('movimientos') }}">Movimientos</a>
                   </li>
+                  {% if session['tipo_usuario'] == "administrador"%}
                   <li>
                     <a class="nav-link" href="{{ url_for('categorias') }}">Categorias</a>
                 </li>
+                {% endif%}
               </ul>
     
           </div>
@@ -79,10 +84,11 @@
           <div class="w-48 bg-gray-800 text-gray-100 py-8 ">
             <div class="flex flex-col  ">
               <h2 class="text-xl font-bold dark:text-white text-center">Movimientos</h2>
-              <a class="justify-items-center items-center text-white  from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm py-2.5 text-center " href="{{ url_for('entrada') }}">Entrada</a>
+              {% if session['tipo_usuario'] == "administrador"%}
+              <a class="justify-items-center items-center text-white  from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm py-2.5 text-center " href="{{ url_for('entradas') }}">Entrada</a>
+              {% endif%}
               <br>
               <a class="justify-items-center items-center text-white  from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm  py-2.5 text-center " href="{{ url_for('salida') }}">Salida</a>
-              
             </div>
           </div>
           <div class="">
@@ -91,11 +97,7 @@
               {% block content %}
       
               <div class="container mt-5">
-               
-              
-         
-               
-         
+
                <div>
                  <div id="clock">
                    <span class="font-extrabold" id="time"></span>
@@ -131,6 +133,82 @@
                  {% endfor %}
                </table>
              </div>
+             <script>
+                function updateTime() {
+                  var now = new Date();
+                  var hours = now.getHours();
+                  var minutes = now.getMinutes();
+                  var seconds = now.getSeconds();
+                  var day = now.getDate();
+                  var month = now.getMonth() + 1;
+                  var year = now.getFullYear();
+            
+                  // Agrega un 0 antes si el número es menor que 10
+                  if (hours < 10) {
+                    hours = "0" + hours;
+                  }
+                  if (minutes < 10) {
+                    minutes = "0" + minutes;
+                  }
+                  if (seconds < 10) {
+                    seconds = "0" + seconds;
+                  }
+                  if (day < 10) {
+                    day = "0" + day;
+                  }
+                  if (month < 10) {
+                    month = "0" + month;
+                  }
+            
+                  // Actualiza la hora y fecha en la página
+                  document.getElementById("time").innerHTML = hours + ":" + minutes + ":" + seconds;
+                  document.getElementById("date").innerHTML = day + "/" + month + "/" + year;
+                }
+            
+                // Actualiza la hora cada segundo
+                setInterval(updateTime, 1000);
+              </script>
+              <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+              <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+              <script>
+                $(document).ready(function() {
+                    var tabla = $('#table').DataTable({
+                        "pagingType": "full_numbers",
+                        "pageLength": 10,
+                        "lengthMenu": [10, 25, 50],
+                        "searching": true,
+                        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+            }
+            
+                    });
+                    
+                    $('#searchInput').on('keyup', function() {
+                        tabla.search(this.value).draw();
+                    });
+                    });
+            </script>
              {% endblock %}
                </div>
                <br>
@@ -162,6 +240,8 @@
       display: inline-block;
     }
   </style>
+<<<<<<< HEAD
+=======
 
   <script>
     function updateTime() {
@@ -241,4 +321,5 @@
 </script>
 
 
+>>>>>>> master
 </html>
