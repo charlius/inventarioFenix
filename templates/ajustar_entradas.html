@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h2 class="text-4xl font-bold dark:text-white">Salida de Productos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<h2 class="text-4xl font-bold dark:text-white">Entrada de Productos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
 <br>
     <form class="bg-white" method="POST" action="">
 
@@ -31,7 +31,7 @@
         </div>
 
         <div class="mb-6 destacado">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="new_existencia">Ajustar cantidad de salida de productos</label>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="new_existencia">Ajustar cantidad de entrada de productos</label>
             <input type="number" class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="new_existencia" name="new_existencia" value="" required placeholder="ajustar Existencia nueva">
         </div>
 
@@ -87,7 +87,7 @@ editarButton.addEventListener("click", function() {
 
   var data = {
     new_existencia: new_existencia,
-    movimiento: "salida"
+    movimiento: "entrada"
   };
 
   fetch("/productos/" + id_product + "/editar", {
