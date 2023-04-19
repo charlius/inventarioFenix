@@ -73,10 +73,13 @@ class Producto:
     self.id_bodega = id_bodega
     self.id_categoria = categoria_id
 
-  def guardar(self):
+  def guardar(self, id_usuario):
     consulta = "INSERT INTO productos (nombre_producto, descripcion, precio_compra, precio_venta, cantidad, cantidad_minima, proveedor_id, id_bodega, id_categoria) VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s)"
     valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega, self.id_categoria)
     self.conexion_db.ejecutar_consulta(consulta, valores)
+    product = Producto.obtener_por_nombre(self.nombre_producto)
+    print(f"product--- {product.id}")
+    Movimiento(product.id, self.id_bodega, self.cantidad, "entrada", id_usuario).guardar()
 
   def editar(self):
     consulta = "UPDATE productos SET nombre_producto=%s, descripcion=%s, precio_compra=%s, precio_venta=%s, cantidad=%s, cantidad_minima=%s, proveedor_id=%s, id_bodega=%s, id_categoria=%s WHERE id=%s"
@@ -87,7 +90,6 @@ class Producto:
     consulta = "UPDATE productos SET nombre_producto=%s, descripcion=%s, precio_compra=%s, precio_venta=%s, cantidad=%s, cantidad_minima=%s, proveedor_id=%s, id_bodega=%s, id_categoria=%s WHERE id=%s"
     valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega, self.id_categoria, self.id)
     self.conexion_db.ejecutar_consulta(consulta, valores)
-
     Movimiento(self.id, self.id_bodega, cantidad, movimiento, id_usuario).guardar()
 
 
@@ -350,6 +352,28 @@ class Movimiento:
       movimientos.append(movimiento)
     return movimientos
 
+
+  @staticmethod
+  def obtener_todos_rango_fecha(fecha_inicio, fecha_fin):
+    consulta = """SELECT movimientos.id, productos.nombre_producto, bodegas.nombre_bodega, movimientos.cantidad, movimientos.tipo_movimiento, movimientos.fecha, productos.precio_venta, productos.precio_compra, movimientos.usuario_id, usuarios.nombre_usuario
+                  FROM movimientos, productos, bodegas, usuarios
+                  WHERE movimientos.usuario_id=usuarios.id and movimientos.producto_id=productos.id and movimientos.bodega_id=bodegas.id and fecha BETWEEN %s AND %s
+              """
+    conexion_db = ConexionBaseDatos()
+    valores = (fecha_inicio+" 00:00:00", fecha_fin+" 23:59:59")
+    resultados = conexion_db.ejecutar_consulta(consulta, valores)
+    movimientos = []
+    for resultado in resultados:
+      movimiento = Movimiento(resultado[1], resultado[2], resultado[3], resultado[4], resultado[8] )
+      movimiento.id = resultado[0]
+      movimiento.fecha = resultado[5].strftime("%Y-%m-%d %H:%M:%S")
+      movimiento.precio_venta = resultado[6]
+      movimiento.total_venta = (resultado[6]*resultado[3])
+      movimiento.precio_compra = resultado[7]
+      movimiento.total_compra = (resultado[7]*resultado[3])
+      movimiento.usuario = resultado[9]
+      movimientos.append(movimiento)
+    return movimientos
   @staticmethod
   def obtener_todos_nombre(nombre_producto):
     consulta = """SELECT movimientos.id, productos.nombre_producto, bodegas.nombre_bodega, movimientos.cantidad, movimientos.tipo_movimiento, movimientos.fecha, productos.precio_venta, productos.precio_compra, movimientos.usuario_id, usuarios.nombre_usuario

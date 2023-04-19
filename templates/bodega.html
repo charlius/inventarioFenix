@@ -22,19 +22,19 @@
                 <table id="table" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-6 py-3">ID</th>
-                            <th scope="col" class="px-6 py-3">Nombre_Bodega</th>
-                            <th scope="col" class="px-6 py-3">Dirección</th>
-                            <th scope="col" class="px-6 py-3">Opcion</th>
+                            <th scope="col" class="px-6 py-3 text-center">ID</th>
+                            <th scope="col" class="px-6 py-3 text-center">Nombre_Bodega</th>
+                            <th scope="col" class="px-6 py-3 text-center">Dirección</th>
+                            <th scope="col" class="px-6 py-3 text-center">Opcion</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for bodega in bodegas %}
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td class="font-bold bg-white" >{{ bodega.id }}</td>
-                                <td class="font-bold bg-white" >{{ bodega.nombre_bodega }}</td>
-                                <td class="font-bold bg-white" >{{ bodega.direccion }}</td>
-                                <td class="px-6 py-4 px-6 py-4 font-bold bg-white" ><a href="/bodegas/{{ bodega.id }}/editar" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar</a></td>
+                                <td class="font-bold bg-white text-center" >{{ bodega.id }}</td>
+                                <td class="font-bold bg-white text-center" >{{ bodega.nombre_bodega }}</td>
+                                <td class="font-bold bg-white text-center" >{{ bodega.direccion }}</td>
+                                <td class="px-6 py-4 px-6 py-4 font-bold bg-white text-center" ><a href="/bodegas/{{ bodega.id }}/editar" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar</a></td>
 
                             </tr>
                         {% endfor %}
