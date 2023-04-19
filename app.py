@@ -85,6 +85,7 @@ def crear_producto():
     if 'usuario' not in session and "administrador" not in session['tipo_usuario']:
         return redirect('/')
     if request.method == 'POST':
+        usuario = Usuario.obtener_por_email(session['usuario'])
         print(request.form)
         nombre = request.form['nombre']
         descripcion = request.form['descripcion']
@@ -106,7 +107,7 @@ def crear_producto():
            id_bodega=id_bodega,
            categoria_id=id_categoria
         )
-        nuevo_producto.guardar()
+        nuevo_producto.guardar(usuario.id)
         return redirect('/productos')
     categorias = Categoria.obtener_todos()
     proveedores = Proveedor.obtener_todos()
@@ -384,6 +385,8 @@ def movimientos():
 
         if "todo" in tipo and nombre_producto and fecha_fin and fecha_fin:
             movimientos = Movimiento.obtener_todos_nombre_rango_fecha(nombre_producto, fecha_inicio, fecha_fin)
+        elif "todo" in tipo and fecha_fin and fecha_fin:
+            movimientos = Movimiento.obtener_todos_rango_fecha(fecha_inicio, fecha_fin)
         elif "todo" in tipo and nombre_producto:
             movimientos = Movimiento.obtener_todos_nombre(nombre_producto)
         elif "todo" in tipo:

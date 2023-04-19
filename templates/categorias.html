@@ -22,17 +22,17 @@
                 <table id="table" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-6 py-3">ID</th>
-                            <th scope="col" class="px-6 py-3">Nombre_categoria</th>
-                            <th scope="col" class="px-6 py-3">opcion</th>
+                            <th scope="col" class="px-6 py-3 text-center">ID</th>
+                            <th scope="col" class="px-6 py-3 text-center">Nombre_categoria</th>
+                            <th scope="col" class="px-6 py-3 text-center">opcion</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for categoria in categorias %}
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td class="font-bold bg-white" >{{ categoria.id }}</td>
-                                <td class="font-bold bg-white" >{{ categoria.nombre }}</td>
-                                <td class="px-6 py-4 px-6 py-4 font-bold bg-white" ><a href="/categorias/{{ categoria.id }}/editar" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar</a></td>
+                                <td class="font-bold bg-white text-center" >{{ categoria.id }}</td>
+                                <td class="font-bold bg-white text-center" >{{ categoria.nombre }}</td>
+                                <td class="px-6 py-4 px-6 py-4 font-bold bg-white text-center" ><a href="/categorias/{{ categoria.id }}/editar" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar</a></td>
 
                             </tr>
                         {% endfor %}

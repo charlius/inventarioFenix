@@ -26,11 +26,11 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" id="table">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="px-6 py-3">ID</th>
-                                <th scope="col" class="px-6 py-3">Nombre</th>
-                                <th scope="col" class="px-6 py-3">Descripción</th>
-                                <th scope="col" class="px-6 py-3">Precio venta</th>
-                                <th scope="col" class="px-6 py-3">Cantidad</th>
+                                <th scope="col" class="px-6 py-3 text-center">ID</th>
+                                <th scope="col" class="px-6 py-3 text-center">Nombre</th>
+                                <th scope="col" class="px-6 py-3 text-center">Descripción</th>
+                                <th scope="col" class="px-6 py-3 text-center">Precio venta</th>
+                                <th scope="col" class="px-6 py-3 text-center">Cantidad</th>
                                
                                 
                                 <th></th>
@@ -39,13 +39,13 @@
                         <tbody>
                             {% for producto in productos %}
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="font-bold bg-white" >{{ producto.id }}</td>
-                                    <td class="font-bold bg-white">{{ producto.nombre_producto }}</td>
-                                    <td class="font-bold bg-white">{{ producto.descripcion }}</td>
-                                    <td class="font-bold bg-white">{{ producto.precio_venta }}</td>
-                                    <td class="font-bold bg-white">{{ producto.cantidad }}</td>
-                                    <td class="px-6 py-4 px-6 py-4 font-bold bg-white"><a href="/productos/{{ producto.id }}/editar" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar</a></td>
-                         
+                                    <td class="font-bold bg-white text-center" >{{ producto.id }}</td>
+                                    <td class="font-bold bg-white text-center">{{ producto.nombre_producto }}</td>
+                                    <td class="font-bold bg-white text-center">{{ producto.descripcion }}</td>
+                                    <td class="font-bold bg-white text-center">{{ producto.precio_venta }}</td>
+                                    <td class="font-bold bg-white text-center">{{ producto.cantidad }}</td>
+                                    <td class="px-6 py-4 px-6 py-4 font-bold bg-white text-center"><a href="/productos/{{ producto.id }}/editar" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar</a></td>
+
                                 </tr>
                             {% endfor %}
                         </tbody>

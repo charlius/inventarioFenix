@@ -54,15 +54,15 @@
 		<table id="tabla_movimientos" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 			<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 				<tr>
-					<th scope="col" class="px-6 py-3">ID</th>
-					<th scope="col" class="px-6 py-3">producto</th>
-                    <th scope="col" class="px-6 py-3">precio venta</th>
-                    <th scope="col" class="px-6 py-3">precio compra</th>
-					<th scope="col" class="px-6 py-3">bodega</th>
-					<th scope="col" class="px-6 py-3">Cantidad</th>
-					<th scope="col" class="px-6 py-3">movimiento</th>
-					<th scope="col" class="px-6 py-3">fecha</th>
-                    <th scope="col" class="px-6 py-3">usuario</th>
+					<th scope="col" class="px-6 py-3 text-center">ID</th>
+					<th scope="col" class="px-6 py-3 text-center">producto</th>
+                    <th scope="col" class="px-6 py-3 text-center">precio venta</th>
+                    <th scope="col" class="px-6 py-3 text-center">precio compra</th>
+					<th scope="col" class="px-6 py-3 text-center">bodega</th>
+					<th scope="col" class="px-6 py-3 text-center">Cantidad</th>
+					<th scope="col" class="px-6 py-3 text-center">movimiento</th>
+					<th scope="col" class="px-6 py-3 text-center">fecha</th>
+                    <th scope="col" class="px-6 py-3 text-center">usuario</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -99,7 +99,7 @@
                         const total_invertido_input = document.getElementById("total_invertido");
                         total_invertido_input.value = 0
 						$.each(data, function(index, value) {
-							$("#tabla_movimientos tbody").append("<tr><td class='bg-white font-bold px-6'>" + value.id + "</td><td class='bg-white font-bold px-6'>" + value.id_producto + "</td class='bg-white font-bold px-6'><td class='bg-white font-bold px-6'>" + value.precio_venta + "</td class='bg-white font-bold px-6'><td class='bg-white font-bold px-6'>" + value.precio_compra + "</td class='bg-white font-bold px-6'><td class='bg-white font-bold px-6'>" + value.id_bodega + "</td><td class='bg-white font-bold px-6'>" + value.cantidad + "</td><td class='bg-white font-bold px-6'>" + value.tipo_movimiento + "</td><td class='bg-white font-bold'>" + value.fecha + "</td><td class='bg-white font-bold'>" + value.usuario + "</td><</tr>");
+							$("#tabla_movimientos tbody").append("<tr><td class='bg-white font-bold px-6 text-center'>" + value.id + "</td><td class='bg-white font-bold px-6 text-center'>" + value.id_producto + "</td class='bg-white font-bold px-6 text-center'><td class='bg-white font-bold px-6 text-center'>" + value.precio_venta + "</td class='bg-white font-bold px-6 text-center'><td class='bg-white font-bold px-6 text-center'>" + value.precio_compra + "</td class='bg-white font-bold px-6 text-center'><td class='bg-white font-bold px-6 text-center'>" + value.id_bodega + "</td><td class='bg-white font-bold px-6 text-center'>" + value.cantidad + "</td><td class='bg-white font-bold px-6 text-center'>" + value.tipo_movimiento + "</td><td class='bg-white font-bold px-6 text-center'>" + value.fecha + "</td><td class='bg-white font-bold px-6 text-center'>" + value.usuario + "</td><</tr>");
 
                             if (value.tipo_movimiento === "entrada"){
                                 console.log(value.precio_compra)

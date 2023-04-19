@@ -8,62 +8,6 @@
     
   </head>
   <body>
-    <!-- <div class="container">
-      <h1>Bienvenido a mi aplicación</h1>
-      <p>Por favor, ingresa tus credenciales para iniciar sesión:</p>
-      <form action="{{ url_for('login') }}" method="POST">
-        <div class="form-group">
-          <label for="username">Nombre de usuario:</label>
-          <input type="text" class="form-control" id="username" name="username" required>
-        </div>
-        <div class="form-group">
-          <label for="password">Contraseña:</label>
-          <input type="password" class="form-control" id="password" name="password" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-      </form>
-    </div> -->
-    <!-- Section: Design Block -->
-
-
-<!-- Section: Design Block -->
-<!-- <section class=" w-4/5 h-full mx-auto relative bg-white bg-opacity-25 backdrop-filter backdrop-blur-lg border-4 border-white border-opacity-25 shadow-md rounded-lg">
-  
-  <div class="card mb-2 login">
-    <div class="row g-0 d-flex align-items-center">
-      <div class="col-lg-3 ">
-        <img src="https://i.pinimg.com/750x/1f/25/64/1f25649af6293282523cb4c55390ca98.jpg" alt="Trendy Pants and Shoes"
-          class="w-100 rounded-t-4 rounded-tr-lg-0 rounded-bl-lg-5" />
-      </div>
-      <div class="col-lg-8">
-        <p class="h1-titulo">Ferreteria Fenix</p>
-        <div class="card-body py-5 px-md-5">
-
-          <form action="{{ url_for('login') }}" method="POST">
-            
-            <div class="form-outline mb-4">
-              <label class="campos" for="username">Nombre de usuario:</label>
-          <input type="text" class="form-control" id="username" name="username" required>
-            </div>
-
-            
-            <div class="form-outline mb-4">
-              <label class="campos" for="password">Contraseña:</label>
-          <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-
-                       
-              <button class="btn btn-primary" type="submit">Iniciar Sesion</button>
-             
-           
-
-          </form>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
 <div class="2xl:container h-screen m-auto">
   <div hidden class="fixed inset-0 w-7/12 lg:block">
     <img src="https://cdn.pixabay.com/photo/2016/12/04/23/22/flea-market-1882817_1280.jpg" class="w-full h-full " alt="Don felix">
@@ -81,11 +25,6 @@
           
           <form action="{{ url_for('login') }}" method="POST" class="space-y-6 py-6">
               <div>
-                  <!-- <input 
-                          type="email" 
-                          placeholder="Your Email"
-                          class="w-full py-3 px-6 ring-1 ring-gray-300 rounded-xl placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-red-400 focus:invalid:outline-none"
-                  > -->
                   <label for="username" placeholder="Nombre de Usuario">Nombre de usuario:</label>
                   
           <input type="text" class="w-full py-3 px-6 ring-1 ring-gray-300 rounded-xl placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-red-400 focus:invalid:outline-none" id="username" name="username" required>
@@ -94,9 +33,6 @@
               <div class="">
                 <label class="" for="password">Contraseña:</label>
                 <input type="password" class="w-full py-3 px-6 ring-1 ring-gray-300 rounded-xl placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-red-400 focus:invalid:outline-none" id="password" name="password" required>
-                  <button type="reset" class="w-max p-3 -mr-3">
-                      <span class="text-sm tracking-wide text-blue-600">Olvido Contraseña ?</span>
-                  </button>
               </div>
 
               <div>
