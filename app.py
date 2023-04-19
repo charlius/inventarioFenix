@@ -538,7 +538,7 @@ def ajustar_salida(producto_id=0):
         return redirect('/productos')
     proveedores = Proveedor.obtener_todos()
     bodegas = Bodega.obtener_todos()
-    return render_template('ajustar_salida.html', producto=producto, proveedores=proveedores, bodegas=bodegas)
+    return render_template('ajustar_salida_stock_minimo.html', producto=producto, proveedores=proveedores, bodegas=bodegas)
 
 # #####################################3
 
