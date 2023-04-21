@@ -6,23 +6,23 @@
     <form class="bg-white" method="POST" action="">
 
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="nombre_usuario" >Nombre de usuario</label>
+            <label class="text-xl block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="nombre_usuario" >Nombre de usuario</label>
             
-            <input type="text" value="{{ usuario.nombre_usuario }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  name="nombre_usuario" required placeholder="carlos">
+            <input type="text" value="{{ usuario.nombre_usuario }}" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  name="nombre_usuario" required placeholder="carlos">
         </div>
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="password">nueva password</label>
-            <input type="text" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  name="password" placeholder="password">
+            <label class="text-xl block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="password">Nueva Contraseña</label>
+            <input type="text" value="" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  name="password" placeholder="password">
         </div>
         <label for="rol">Rol:</label>
         <select id="rol" name="rol">
-            <option value="administrador">Administrador</option>
-            <option value="vendedor">Vendedor</option>
+            <option class="text-xl" value="administrador">Administrador</option>
+            <option class="text-xl" value="vendedor">Vendedor</option>
         </select>
-        <input type="hidden" id="rol-seleccionado" name="rol-seleccionado" value="">
+        <input class="text-xl" type="hidden" id="rol-seleccionado" name="rol-seleccionado" value="">
         <br><br>
 
-        <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Guardar</button>
+        <button type="submit" class="text-xl text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Guardar</button>
     </form>
     <script>
         $(document).ready(function() {

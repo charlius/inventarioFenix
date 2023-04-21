@@ -13,7 +13,7 @@
         <br>
 		<form>
 			<div class="form-group">
-				<label class="font-bold " for="tipo_movimiento font-bold">Tipo de movimiento:</label>
+				<label class="font-bold text-xl " for="tipo_movimiento ">Tipo de movimiento:</label>
                 <br>
 				<select id="tipo_movimiento" name="tipo_movimiento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 					<option class="font-bold" value="todo">Todos</option>
@@ -23,46 +23,52 @@
 			</div>
             <br>
             <div>
-                <label class="font-bold" for="mi-checkbox">rango de fecha:</label>
+                <label class="font-bold text-xl" for="mi-checkbox">rango de fecha:</label>
                 <input type="checkbox" id="mi-checkbox">
             </div>
             <br>
             <div id="fechas" style="display:none;">
                 <div class="form-group">
-                    <label class="font-bold" for="fecha_inicio">Fecha de inicio:</label>
+                    <label class="font-bold text-xl" for="fecha_inicio">Fecha de inicio:</label>
                     <input type="date" class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_inicio" name="fecha_inicio">
                 </div>
                 <div class="form-group">
-                <label class="font-bold" for="fecha_fin">Fecha de fin:</label>
+                <label class="font-bold text-xl" for="fecha_fin">Fecha de fin:</label>
                 <input type="date" class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="fecha_fin" name="fecha_fin">
                 </div>
             </div>
             <br>
             <div>
-                <label class="font-bold" for="nombre_producto">Nombre producto:</label>
+                <label class="font-bold text-xl" for="nombre_producto">Nombre producto:</label>
                 <input type="text" class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="nombre_producto" name="nombre_producto" >
             </div>
             <button type="button" id="buscar" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Buscar</button>
             <br>
-            <label class="font-bold" for="total_venta">Total ventas:</label>
+            <label class="font-bold text-xl" for="total_venta">Total ventas:</label>
             <input type="text" class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="total_venta" name="total_venta" disabled>
-            <label class="font-bold" for="total_invertido">Total invertido:</label>
+            <label class="font-bold text-xl" for="total_invertido">Total invertido:</label>
             <input type="text" class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="total_invertido" name="total_invertido" disabled>
           <br>
           <br>
+
+          <input id="tipo_sesion" type="hidden" value="{{session['tipo_usuario']}}" >
+
 		</form>
 		<table id="tabla_movimientos" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 			<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 				<tr>
-					<th scope="col" class="px-6 py-3 text-center">ID</th>
-					<th scope="col" class="px-6 py-3 text-center">producto</th>
-                    <th scope="col" class="px-6 py-3 text-center">precio venta</th>
-                    <th scope="col" class="px-6 py-3 text-center">precio compra</th>
-					<th scope="col" class="px-6 py-3 text-center">bodega</th>
-					<th scope="col" class="px-6 py-3 text-center">Cantidad</th>
-					<th scope="col" class="px-6 py-3 text-center">movimiento</th>
-					<th scope="col" class="px-6 py-3 text-center">fecha</th>
-                    <th scope="col" class="px-6 py-3 text-center">usuario</th>
+					<th scope="col" class="px-6 py-3 text-center text-lg">ID</th>
+					<th scope="col" class="px-6 py-3 text-center text-lg">producto</th>
+                    <th scope="col" class="px-6 py-3 text-center text-lg">precio venta</th>
+                    {% if session['tipo_usuario'] == "administrador"%}
+                    <th scope="col" class="px-6 py-3 text-center text-lg">precio compra</th>
+                    {% endif%}
+					<th scope="col" class="px-6 py-3 text-center text-lg">bodega</th>
+					<th scope="col" class="px-6 py-3 text-center text-lg">Cantidad</th>
+					<th scope="col" class="px-6 py-3 text-center text-lg">movimiento</th>
+					<th scope="col" class="px-6 py-3 text-center text-lg">fecha</th>
+                    
+                    <th scope="col" class="px-6 py-3 text-center text-lg">usuario</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -99,7 +105,17 @@
                         const total_invertido_input = document.getElementById("total_invertido");
                         total_invertido_input.value = 0
 						$.each(data, function(index, value) {
-							$("#tabla_movimientos tbody").append("<tr><td class='bg-white font-bold px-6 text-center'>" + value.id + "</td><td class='bg-white font-bold px-6 text-center'>" + value.id_producto + "</td class='bg-white font-bold px-6 text-center'><td class='bg-white font-bold px-6 text-center'>" + value.precio_venta + "</td class='bg-white font-bold px-6 text-center'><td class='bg-white font-bold px-6 text-center'>" + value.precio_compra + "</td class='bg-white font-bold px-6 text-center'><td class='bg-white font-bold px-6 text-center'>" + value.id_bodega + "</td><td class='bg-white font-bold px-6 text-center'>" + value.cantidad + "</td><td class='bg-white font-bold px-6 text-center'>" + value.tipo_movimiento + "</td><td class='bg-white font-bold px-6 text-center'>" + value.fecha + "</td><td class='bg-white font-bold px-6 text-center'>" + value.usuario + "</td><</tr>");
+
+                           var miInput = document.getElementById("tipo_sesion");
+                           sesion = miInput.value;
+
+                           if(sesion == 'administrador'){
+                            $("#tabla_movimientos tbody").append("<tr><td class='bg-white font-bold px-6 text-center text-lg'>" + value.id + "</td><td class='bg-white font-bold px-6 text-center text-lg'>" + value.id_producto + "</td class='bg-white font-bold px-6 text-center text-lg'><td class='bg-white font-bold px-6 text-center text-lg'>" + value.precio_venta + "</td class='bg-white font-bold px-6 text-center text-lg'><td class='bg-white font-bold px-6 text-center text-lg'>" + value.precio_compra + "</td class='bg-white font-bold px-6 text-center text-lg'><td class='bg-white font-bold px-6 text-center text-lg'>" + value.id_bodega + "</td><td class='bg-white font-bold px-6 text-center text-lg'>" + value.cantidad + "</td><td class='bg-white font-bold px-6 text-center text-lg'>" + value.tipo_movimiento + "</td><td class='bg-white font-bold px-6 text-center text-lg'>" + value.fecha + "</td><td class='bg-white font-bold px-6 text-center text-lg'>" + value.usuario + "</td><</tr>");
+                           }
+                           else if(sesion =='vendedor'){
+                                                       $("#tabla_movimientos tbody").append("<tr><td class='bg-white font-bold px-6 text-center text-lg'>" + value.id + "</td><td class='bg-white font-bold px-6 text-center text-lg'>" + value.id_producto + "</td class='bg-white font-bold px-6 text-center text-lg'><td class='bg-white font-bold px-6 text-center text-lg'>" + value.precio_venta + "</td class='bg-white font-bold px-6 text-center text-lg'><td class='bg-white font-bold px-6 text-center text-lg'>" + value.id_bodega + "</td><td class='bg-white font-bold px-6 text-center text-lg'>" + value.cantidad + "</td><td class='bg-white font-bold px-6 text-center text-lg'>" + value.tipo_movimiento + "</td><td class='bg-white font-bold px-6 text-center text-lg'>" + value.fecha + "</td><td class='bg-white font-bold px-6 text-center text-lg'>" + value.usuario + "</td><</tr>");
+                           }
+							
 
                             if (value.tipo_movimiento === "entrada"){
                                 console.log(value.precio_compra)
