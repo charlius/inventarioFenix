@@ -562,6 +562,10 @@ def ajustar_salida(producto_id=0):
     return render_template('ajustar_salida_stock_minimo.html', producto=producto, proveedores=proveedores, bodegas=bodegas)
 
 # #####################################3
+@app.route('/codigo_qr')
+def codigo_qr():
+    # incluir variable en la respuesta
+        return render_template('codigo_qr.html')
 
 app = Flask(__name__)
 
