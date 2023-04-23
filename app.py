@@ -2,8 +2,9 @@ from io import BytesIO
 import json
 import qrcode
 from PIL import Image
+from PyPDF2 import PdfFileWriter, PdfFileReader
 from werkzeug.security import check_password_hash
-from flask import Flask, jsonify, render_template, request, redirect, session
+from flask import Flask, jsonify, render_template, request, redirect, session, make_response
 from src.gestion_inventario_db import Bodega, Categoria, Movimiento, Producto, Proveedor, Usuario
 
 
@@ -562,6 +563,50 @@ def ajustar_salida(producto_id=0):
 
 # #####################################3
 
+app = Flask(__name__)
+
+@app.route('/generar_pdf/<categoria>')
+def generar_pdf(categoria):
+    # Obtener los productos de la categoría especificada
+    productos = Producto.obtener_productos_por_categoria(categoria)
+
+    # Ordenar los productos alfabéticamente por nombre
+    productos_ordenados = sorted(productos, key=lambda p: p['nombre_producto'])
+
+    # Generar los códigos QR y agregarlos al PDF
+    pdf = PdfFileWriter()
+    page = 0
+    buffer = BytesIO()
+    for i, producto in enumerate(productos_ordenados):
+        # Generar el código QR
+        qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
+        qr.add_data(producto['code_qr'])
+        qr.make(fit=True)
+
+        # Agregar el QR al PDF
+        if i % 30 == 0:
+            if i > 0:
+                pdf.addPage(page)
+                page = 0
+            page = pdf.addBlankPage()
+        x = (i % 6) * 100 + 10
+        y = ((i % 30) // 6) * 100 + 10
+        qr_img = qr.make_image(fill_color="black", back_color="white")
+        qr_img.save(buffer, format="png")
+        page.mergeTranslatedPage(PdfFileReader(BytesIO(buffer.getvalue())).getPage(0), x, y)
+        buffer.seek(0)
+
+    # Agregar los nombres de los productos al PDF
+    for i, producto in enumerate(productos_ordenados):
+        x = (i % 6) * 100 + 10
+        y = ((i % 30) // 6) * 100 + 90
+        page.drawText(x, y, producto['nombre_producto'])
+
+    # Crear la respuesta con el PDF generado
+    response = make_response(pdf.writeToString())
+    response.headers['Content-Disposition'] = 'attachment; filename=qr_{}.pdf'.format(categoria)
+    response.mimetype = 'application/pdf'
+    return response
 
 
 if __name__ == '__main__':

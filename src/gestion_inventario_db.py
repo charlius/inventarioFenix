@@ -142,8 +142,19 @@ class Producto:
       producto = Producto(resultado[1], resultado[2], resultado[3], resultado[4], resultado[5])
       productos.append(producto)
     return resultados
-    
 
+  @staticmethod
+  def obtener_productos_por_categoria(id_categoria):
+    consulta =f"SELECT nombre_producto, code_qr FROM productos WHERE id_categoria = {id_categoria}"
+    conexion_db = ConexionBaseDatos()
+    resultados = conexion_db.ejecutar_consulta(consulta)
+    productos = []
+    for resultado in resultados:
+      producto = Producto(resultado[1], resultado[2], resultado[3], resultado[4], resultado[5])
+      producto.id = resultado[0]
+      producto.code_qr = resultado[10]
+      productos.append(producto)
+    return productos
 
 class Bodega:
   def __init__(self, nombre_bodega, direccion):

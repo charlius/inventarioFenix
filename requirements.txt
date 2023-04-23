@@ -4,3 +4,4 @@ werkzeug
 mysql-connector
 pillow
 qrcode
+PyPDF2
