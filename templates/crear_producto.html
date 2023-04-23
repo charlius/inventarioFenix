@@ -6,61 +6,61 @@
     <form class="bg-white flex flex-col relative overflow-x-auto" method="POST" action="{{ url_for('crear_producto') }}">
 
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="nombre" placelholder="Nombre">Nombre Producto</label>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-xl" for="nombre" placelholder="Nombre">Nombre Producto</label>
             <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="nombre" name="nombre" required placeholder="Nombre">
         </div>
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="descripcion">Descripción</label>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-xl" for="descripcion">Descripción</label>
             <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="descripcion" name="descripcion" required placeholder="Descripción">
         </div>
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="precio_compra">Precio compra</label>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-xl" for="precio_compra">Precio compra</label>
             <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="precio_compra" name="precio_compra" required placeholder="Precio de compra:">
         </div>
         <div>
-            <label for="mi-checkbox">precio de venta por porcentaje:</label>
+            <label class="text-xl" for="mi-checkbox">precio de venta por porcentaje:</label>
 	        <input type="checkbox" id="mi-checkbox">
         </div>
         <div id="por_venta" style="display:none;">
-            <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="porcentaje_venta" name="porcentaje_venta" placeholder="porcentaje de venta (ej:20)">
+            <input  type="number" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="porcentaje_venta" name="porcentaje_venta" placeholder="porcentaje de venta (ej:20)">
         </div>
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="precio_venta">Precio venta</label>
-            <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="precio_venta" name="precio_venta" required placeholder="Precio de venta" value="">
+            <label class="text-xl block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="precio_venta">Precio venta</label>
+            <input type="number" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="precio_venta" name="precio_venta" required placeholder="Precio de venta" value="">
         </div>
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="existencia">Existencia</label>
-            <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="existencia" name="existencia" required placeholder="Existencia">
+            <label class="text-xl block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="existencia">Existencia</label>
+            <input type="number" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="existencia" name="existencia" required placeholder="Existencia">
         </div>
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="cantidad_minima">Cantidad minima</label>
-            <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="cantidad_minima" name="cantidad_minima" required placeholder="Cantidad Minima">
+            <label class="text-xl block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="cantidad_minima">Cantidad minima</label>
+            <input type="number" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="cantidad_minima" name="cantidad_minima" required placeholder="Cantidad Minima">
         </div>
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="bodega_id">categoria_id</label>
-            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="categoria_id" name="categoria_id" required placeholder="categoria" value="">
+            <label class="text-xl block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="bodega_id">categoria_id</label>
+            <select class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="categoria_id" name="categoria_id" required placeholder="categoria" value="">
                 {% for categoria in categorias %}
                     <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
                 {% endfor %}
             </select>
         </div>
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="bodega_id">Bodega_id</label>
-            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="bodega_id" name="bodega_id" required placeholder="Bodega">
+            <label class="text-xl block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="bodega_id">Bodega_id</label>
+            <select class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="bodega_id" name="bodega_id" required placeholder="Bodega">
                 {% for bodega in bodegas %}
                     <option value="{{ bodega.id }}">{{ bodega.nombre_bodega }}</option>
                 {% endfor %}
             </select>
         </div>
         <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="proveedor_id">Proveedor ID</label>
-            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="proveedor_id" name="proveedor_id" required placelholder="Proveedor">
+            <label class="text-xl block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="proveedor_id">Proveedor ID</label>
+            <select class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="proveedor_id" name="proveedor_id" required placelholder="Proveedor">
                 {% for proveedor in proveedores %}
                     <option value="{{ proveedor.id }}">{{ proveedor.nombre_proveedor }}</option>
                 {% endfor %}
             </select>
         </div>
-        <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Guardar</button>
+        <button type="submit" class="text-xl text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Guardar</button>
     </form>
     <script>
 		const miCheckbox = document.getElementById("mi-checkbox");

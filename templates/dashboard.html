@@ -45,28 +45,28 @@
           <div class="flex justify-center   sm:flex-row">
               <ul class="flex flex-col sm:flex-row   font-medium mt-0 mr-6 mb-4 sm:mb-0 space-y-4 sm:space-y-0 sm:space-x-8 text-sm">
                   <li>
-                      <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+                      <a class="nav-link text-2xl" href="{{ url_for('dashboard') }}">Dashboard</a>
                   </li>
                   {% if session['tipo_usuario'] == "administrador"%}
                   <li>
-                      <a class="nav-link" href="{{ url_for('productos') }}">Productos</a>
+                      <a class="nav-link text-2xl" href="{{ url_for('productos') }}">Productos</a>
                   </li>
                   <li>
-                      <a class="nav-link" href="{{ url_for('bodegas') }}">Bodega</a>
+                      <a class="nav-link text-2xl" href="{{ url_for('bodegas') }}">Bodega</a>
                   </li>
                   <li>
-                      <a class="nav-link" href="{{ url_for('proveedores') }}">Proveedores</a>
+                      <a class="nav-link text-2xl" href="{{ url_for('proveedores') }}">Proveedores</a>
                   </li>
                   <li>
-                      <a class="nav-link" href="{{ url_for('usuarios') }}">Usuarios</a>
+                      <a class="nav-link text-2xl" href="{{ url_for('usuarios') }}">Usuarios</a>
                   </li>
                   {% endif %}
                   <li>
-                      <a class="nav-link" href="{{ url_for('movimientos') }}">Movimientos</a>
+                      <a class="nav-link text-2xl" href="{{ url_for('movimientos') }}">Movimientos</a>
                   </li>
                   {% if session['tipo_usuario'] == "administrador"%}
                   <li>
-                    <a class="nav-link" href="{{ url_for('categorias') }}">Categorias</a>
+                    <a class="nav-link text-2xl" href="{{ url_for('categorias') }}">Categorias</a>
                 </li>
                 {% endif%}
               </ul>
@@ -82,12 +82,12 @@
         <div class="flex flex-flex  ">
           <div class="w-48 bg-gray-800 text-gray-100 py-8 ">
             <div class="flex flex-col  ">
-              <h2 class="text-xl font-bold dark:text-white text-center">Movimientos</h2>
+              <h2 class="text-xl font-bold dark:text-white text-center text-2xl">Movimientos</h2>
               {% if session['tipo_usuario'] == "administrador"%}
-              <a class="justify-items-center items-center text-white  from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm py-2.5 text-center " href="{{ url_for('entradas') }}">Entrada</a>
+              <a class="justify-items-center items-center text-white  from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm py-2.5 text-center text-xl " href="{{ url_for('entradas') }}">Entrada</a>
               {% endif%}
               <br>
-              <a class="justify-items-center items-center text-white  from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm  py-2.5 text-center " href="{{ url_for('salida') }}">Salida</a>
+              <a class="justify-items-center items-center text-white  from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm  py-2.5 text-center text-xl " href="{{ url_for('salida') }}">Salida</a>
             </div>
           </div>
           <div class="">
@@ -110,23 +110,23 @@
                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 " id="table">
                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
                  <tr class="">
-                   <th>ID</th>
-                   <th>Nombre</th>
-                   <th>Descripción</th>
-                   <th class="text-red-500">Cantidad</th>
-                   <th class="">Cantidad mínima</th>
-                   <th>Ajustar cantidad</th>
+                   <th class="text-xl">ID</th>
+                   <th class="text-xl">Nombre</th>
+                   <th class="text-xl">Descripción</th>
+                   <th class="text-red-500 text-xl">Cantidad</th>
+                   <th class="text-xl">Cantidad mínima</th>
+                   <th class="text-xl">Ajustar cantidad</th>
                  </tr>
                </thead>
                <tbody>
                  {% for producto in productos %}
                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                     <td class="font-bold bg-white">{{ producto[0] }}</td>
-                     <td class="font-bold bg-white">{{ producto[1] }}</td>
-                     <td class="font-bold bg-white">{{ producto[2] }}</td>
-                     <td class="text-red-500 font-bold bg-white">{{ producto[5] }}</td>
-                     <td class="font-bold bg-white">{{ producto[6] }}</td>
-                     <td class="px-6 py-4 font-bold bg-white"><a href="/productos/{{ producto[0] }}/salida_producto" class=" text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ajustar cantidad</a></td>
+                     <td class="font-bold bg-white text-xl">{{ producto[0] }}</td>
+                     <td class="font-bold bg-white text-xl">{{ producto[1] }}</td>
+                     <td class="font-bold bg-white text-xl">{{ producto[2] }}</td>
+                     <td class="text-red-500 font-bold bg-white text-xl">{{ producto[5] }}</td>
+                     <td class="font-bold bg-white text-xl">{{ producto[6] }}</td>
+                     <td class="px-6 py-4 font-bold bg-white text-xl"><a href="/productos/{{ producto[0] }}/salida_producto" class=" text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ajustar cantidad</a></td>
                    </tr>
                  </tbody>
                  {% endfor %}
