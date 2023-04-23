@@ -73,9 +73,9 @@ class Producto:
     self.id_bodega = id_bodega
     self.id_categoria = categoria_id
 
-  def guardar(self, id_usuario):
-    consulta = "INSERT INTO productos (nombre_producto, descripcion, precio_compra, precio_venta, cantidad, cantidad_minima, proveedor_id, id_bodega, id_categoria) VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s)"
-    valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega, self.id_categoria)
+  def guardar(self, id_usuario, code_qr):
+    consulta = "INSERT INTO productos (nombre_producto, descripcion, precio_compra, precio_venta, cantidad, cantidad_minima, proveedor_id, id_bodega, id_categoria, code_qr) VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s, %s)"
+    valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega, self.id_categoria, code_qr)
     self.conexion_db.ejecutar_consulta(consulta, valores)
     product = Producto.obtener_por_nombre(self.nombre_producto)
     print(f"product--- {product.id}")

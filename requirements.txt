@@ -2,3 +2,5 @@ mysql-connector-python-rf
 flask
 werkzeug
 mysql-connector
+pillow
+qrcode

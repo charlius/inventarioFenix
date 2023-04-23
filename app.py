@@ -1,4 +1,7 @@
+from io import BytesIO
 import json
+import qrcode
+from PIL import Image
 from werkzeug.security import check_password_hash
 from flask import Flask, jsonify, render_template, request, redirect, session
 from src.gestion_inventario_db import Bodega, Categoria, Movimiento, Producto, Proveedor, Usuario
@@ -96,6 +99,20 @@ def crear_producto():
         precio_compra = request.form['precio_compra']
         precio_venta = request.form['precio_venta']
         id_categoria = request.form['categoria_id']
+
+       # Crear un objeto QR Code
+        qr = qrcode.QRCode(version=1, box_size=10, border=5)
+        qr.add_data('Hola, mundo!')
+        qr.make(fit=True)
+
+        # Convertir el objeto QR Code en una imagen PNG en memoria
+        buffer = BytesIO()
+        img = qr.make_image(fill_color="black", back_color="white")
+        img.save(buffer, format="PNG")
+
+        # Convertir los bytes del PNG a una imagen Pillow
+        pil_img = Image.open(BytesIO(buffer.getvalue()))
+
         nuevo_producto = Producto(
            nombre_producto=nombre,
            descripcion=descripcion,
@@ -107,7 +124,7 @@ def crear_producto():
            id_bodega=id_bodega,
            categoria_id=id_categoria
         )
-        nuevo_producto.guardar(usuario.id)
+        nuevo_producto.guardar(usuario.id, pil_img.tobytes())
         return redirect('/productos')
     categorias = Categoria.obtener_todos()
     proveedores = Proveedor.obtener_todos()
