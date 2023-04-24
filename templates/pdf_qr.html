@@ -1,41 +1,17 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Lista de archivos PDF</title>
-    <style>
-      body {
-        font-family: sans-serif;
-      }
-      h1 {
-        text-align: center;
-      }
-      ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-      li {
-        margin: 10px 0;
-      }
-      a {
-        display: block;
-        padding: 10px;
-        background-color: #eee;
-        color: #333;
-        text-decoration: none;
-        border-radius: 5px;
-        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-      }
-      a:hover {
-        background-color: #ccc;
-      }
-    </style>
-  </head>
-  <body>
+
+
+ {% extends 'dashboard.html' %}
+
+{% block content %}
+<h2 class="text-4xl font-bold dark:text-white">Archivos PDF disponibles en el servidor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+    <br>
+    <div class="container bg-white">
     {% for archivo_pdf in archivos_pdf %}
-    <p>Descargar <a href="{{ url_for('descargar_pdf', nombre_archivo=archivo_pdf) }}">{{ archivo_pdf }}</a></p>
+    <p class="font-bold text-2xl">Descargar</p>
+      
+       <a class="text-2xl bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-green-500" href="{{ url_for('descargar_pdf', nombre_archivo=archivo_pdf) }}">{{ archivo_pdf }}</a>
+       <br>
     {% endfor %}
+  </div>
     
-    <h2>Archivos PDF disponibles en el servidor
-  </body>
-</html>
+{% endblock %}

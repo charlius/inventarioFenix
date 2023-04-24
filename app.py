@@ -145,7 +145,9 @@ def editar_producto(producto_id=0):
     usuario = Usuario.obtener_por_email(session['usuario'])
     if not producto:
         return redirect('/productos')
+    
     if request.method == 'POST':
+        print(request.form)
         if request.form.get('nombre', ""):
             nombre = request.form['nombre']
             descripcion = request.form['descripcion']
@@ -156,6 +158,8 @@ def editar_producto(producto_id=0):
             precio_compra = request.form['precio_compra']
             precio_venta = request.form['precio_venta']
             categoria_id = request.form['categoria_id']
+
+            
 
             producto_edit = Producto(
             nombre_producto=nombre,
