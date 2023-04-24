@@ -31,9 +31,10 @@
             <input type="number" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="precio_venta" name="precio_venta" value="{{ producto.precio_venta }}" required placeholder="Precio_venta">
         </div>
         <div class="mb-6">
-            <label class="text-xl block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="existencia">Existencia</label>
-            <input type="number" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="existencia" name="existencia" value="{{ producto.cantidad }}"required disabled placeholder="Existencia">
+            <label class="text-xl block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="existencia">Precio Venta</label>
+            <input type="number" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="existencia" name="existencia" value="{{ producto.cantidad}}" required placeholder="existencia">
         </div>
+        
         <div class="mb-6">
             <label class="text-xl block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="cantidad_minima">Cantidad Minima</label>
             <input type="number" class="text-xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="cantidad_minima" name="cantidad_minima" value="{{ producto.cantidad_minima }}"required placeholder="Cantidad_minima">

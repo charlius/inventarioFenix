@@ -152,7 +152,7 @@ class Producto:
     for resultado in resultados:
       producto = Producto(resultado[1], resultado[2], resultado[3], resultado[4], resultado[5])
       producto.id = resultado[0]
-      producto.code_qr = resultado[10]
+      
       productos.append(resultado[1])
     return productos
 
