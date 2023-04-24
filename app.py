@@ -1,6 +1,19 @@
+from io import BytesIO
+import io
 import json
+import os
+import tempfile
+import qrcode
+import pyqrcode
+from PIL import Image
+
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.units import inch
+from reportlab.lib.utils import ImageReader 
+
 from werkzeug.security import check_password_hash
-from flask import Flask, jsonify, render_template, request, redirect, session
+from flask import Flask, jsonify, render_template, request, redirect, session, send_file
 from src.gestion_inventario_db import Bodega, Categoria, Movimiento, Producto, Proveedor, Usuario
 
 
@@ -96,6 +109,15 @@ def crear_producto():
         precio_compra = request.form['precio_compra']
         precio_venta = request.form['precio_venta']
         id_categoria = request.form['categoria_id']
+
+        # Crear el código QR
+        qr = pyqrcode.create(nombre)
+        buffer = io.BytesIO()
+        qr.png(buffer, scale=8)
+
+        # Convertir el objeto BytesIO en bytes
+        imagen_bytes = buffer.getvalue()
+
         nuevo_producto = Producto(
            nombre_producto=nombre,
            descripcion=descripcion,
@@ -107,7 +129,7 @@ def crear_producto():
            id_bodega=id_bodega,
            categoria_id=id_categoria
         )
-        nuevo_producto.guardar(usuario.id)
+        nuevo_producto.guardar(usuario.id, imagen_bytes)
         return redirect('/productos')
     categorias = Categoria.obtener_todos()
     proveedores = Proveedor.obtener_todos()
@@ -549,7 +571,59 @@ def codigo_qr():
     # incluir variable en la respuesta
         return render_template('codigo_qr.html')
 
+@app.route('/generar_pdf/')
+def generar_pdf():
+    # Obtener la ruta absoluta del directorio donde se ejecuta el app.py
+    directorio_actual = os.getcwd()
 
+    # Obtener los productos de la categoría especificada en un objeto 
+    categorias = Categoria.obtener_todos()
+    rutas_pdf = []
+    for categoria in categorias:
+        productos = Producto.obtener_productos_por_categoria(categoria.id)
+        ruta_pdf = os.path.join(directorio_actual, f"codigos_qr_{categoria.nombre}.pdf")
+        c = canvas.Canvas(ruta_pdf, pagesize=letter)
+        productos.sort()
 
+        # Establecer el tamaño del código QR y la distancia entre los códigos
+        size = 1.5 * inch
+        x_offset = 0.5 * inch
+        y_offset = 0.5 * inch
+
+        # Generar un código QR para cada nombre y guardar la imagen en el PDF
+        x = 0
+        y = 10 * inch
+        for index, nombre in enumerate(productos):
+            if index % 20 == 0:
+                c.showPage()
+                y = 10 * inch
+            qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=5, border=4)
+            qr.add_data(nombre)
+            qr.make(fit=True)
+            qr_img = qr.make_image(fill_color="black", back_color="white")
+            qr_byte_stream = BytesIO()
+            qr_img.save(qr_byte_stream, 'PNG')
+            qr_img = ImageReader(qr_byte_stream)
+            c.drawImage(qr_img, x=x_offset + x, y=y - size, width=size, height=size)
+            c.drawString(x=x_offset + x, y=y - size - 0.3*inch, text=nombre)
+            x += size + 0.5 * inch
+            if x > 6.5 * inch:
+                x = 0
+                y -= size + 0.5 * inch
+        c.save()
+
+        # Obtener la ruta absoluta del archivo PDF generado y agregarla a la lista
+        ruta_pdf = os.path.abspath(f"codigos_qr_{categoria.nombre}.pdf")
+        rutas_pdf.append(ruta_pdf)
+
+    # Obtener la lista de archivos PDF en el directorio actual
+    archivos_pdf = [archivo for archivo in os.listdir() if archivo.endswith(".pdf")]
+
+    # Renderizar la plantilla HTML y pasar la lista de archivos PDF y las rutas absolutas de los archivos generados como contexto
+    return render_template("pdf_qr.html", archivos_pdf=archivos_pdf, rutas_pdf=rutas_pdf)
+
+@app.route('/descargar_pdf/<nombre_archivo>')
+def descargar_pdf(nombre_archivo):
+    return send_file(nombre_archivo, as_attachment=True)
 if __name__ == '__main__':
     app.run(debug=True)
