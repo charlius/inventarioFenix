@@ -5,3 +5,5 @@ mysql-connector
 pillow
 qrcode
 PyPDF2
+reportlab
+pyqrcode

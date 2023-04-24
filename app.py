@@ -1,10 +1,19 @@
 from io import BytesIO
+import io
 import json
+import os
+import tempfile
 import qrcode
+import pyqrcode
 from PIL import Image
-from PyPDF2 import PdfFileWriter, PdfFileReader
+
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.units import inch
+from reportlab.lib.utils import ImageReader 
+
 from werkzeug.security import check_password_hash
-from flask import Flask, jsonify, render_template, request, redirect, session, make_response
+from flask import Flask, jsonify, render_template, request, redirect, session, send_file
 from src.gestion_inventario_db import Bodega, Categoria, Movimiento, Producto, Proveedor, Usuario
 
 
@@ -101,18 +110,13 @@ def crear_producto():
         precio_venta = request.form['precio_venta']
         id_categoria = request.form['categoria_id']
 
-       # Crear un objeto QR Code
-        qr = qrcode.QRCode(version=1, box_size=10, border=5)
-        qr.add_data('Hola, mundo!')
-        qr.make(fit=True)
+        # Crear el código QR
+        qr = pyqrcode.create(nombre)
+        buffer = io.BytesIO()
+        qr.png(buffer, scale=8)
 
-        # Convertir el objeto QR Code en una imagen PNG en memoria
-        buffer = BytesIO()
-        img = qr.make_image(fill_color="black", back_color="white")
-        img.save(buffer, format="PNG")
-
-        # Convertir los bytes del PNG a una imagen Pillow
-        pil_img = Image.open(BytesIO(buffer.getvalue()))
+        # Convertir el objeto BytesIO en bytes
+        imagen_bytes = buffer.getvalue()
 
         nuevo_producto = Producto(
            nombre_producto=nombre,
@@ -125,7 +129,7 @@ def crear_producto():
            id_bodega=id_bodega,
            categoria_id=id_categoria
         )
-        nuevo_producto.guardar(usuario.id, pil_img.tobytes())
+        nuevo_producto.guardar(usuario.id, imagen_bytes)
         return redirect('/productos')
     categorias = Categoria.obtener_todos()
     proveedores = Proveedor.obtener_todos()
@@ -567,51 +571,59 @@ def codigo_qr():
     # incluir variable en la respuesta
         return render_template('codigo_qr.html')
 
-app = Flask(__name__)
+@app.route('/generar_pdf/')
+def generar_pdf():
+    # Obtener la ruta absoluta del directorio donde se ejecuta el app.py
+    directorio_actual = os.getcwd()
 
-@app.route('/generar_pdf/<categoria>')
-def generar_pdf(categoria):
-    # Obtener los productos de la categoría especificada
-    productos = Producto.obtener_productos_por_categoria(categoria)
+    # Obtener los productos de la categoría especificada en un objeto 
+    categorias = Categoria.obtener_todos()
+    rutas_pdf = []
+    for categoria in categorias:
+        productos = Producto.obtener_productos_por_categoria(categoria.id)
+        ruta_pdf = os.path.join(directorio_actual, f"codigos_qr_{categoria.nombre}.pdf")
+        c = canvas.Canvas(ruta_pdf, pagesize=letter)
+        productos.sort()
 
-    # Ordenar los productos alfabéticamente por nombre
-    productos_ordenados = sorted(productos, key=lambda p: p['nombre_producto'])
+        # Establecer el tamaño del código QR y la distancia entre los códigos
+        size = 1.5 * inch
+        x_offset = 0.5 * inch
+        y_offset = 0.5 * inch
 
-    # Generar los códigos QR y agregarlos al PDF
-    pdf = PdfFileWriter()
-    page = 0
-    buffer = BytesIO()
-    for i, producto in enumerate(productos_ordenados):
-        # Generar el código QR
-        qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
-        qr.add_data(producto['code_qr'])
-        qr.make(fit=True)
+        # Generar un código QR para cada nombre y guardar la imagen en el PDF
+        x = 0
+        y = 10 * inch
+        for index, nombre in enumerate(productos):
+            if index % 20 == 0:
+                c.showPage()
+                y = 10 * inch
+            qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=5, border=4)
+            qr.add_data(nombre)
+            qr.make(fit=True)
+            qr_img = qr.make_image(fill_color="black", back_color="white")
+            qr_byte_stream = BytesIO()
+            qr_img.save(qr_byte_stream, 'PNG')
+            qr_img = ImageReader(qr_byte_stream)
+            c.drawImage(qr_img, x=x_offset + x, y=y - size, width=size, height=size)
+            c.drawString(x=x_offset + x, y=y - size - 0.3*inch, text=nombre)
+            x += size + 0.5 * inch
+            if x > 6.5 * inch:
+                x = 0
+                y -= size + 0.5 * inch
+        c.save()
 
-        # Agregar el QR al PDF
-        if i % 30 == 0:
-            if i > 0:
-                pdf.addPage(page)
-                page = 0
-            page = pdf.addBlankPage()
-        x = (i % 6) * 100 + 10
-        y = ((i % 30) // 6) * 100 + 10
-        qr_img = qr.make_image(fill_color="black", back_color="white")
-        qr_img.save(buffer, format="png")
-        page.mergeTranslatedPage(PdfFileReader(BytesIO(buffer.getvalue())).getPage(0), x, y)
-        buffer.seek(0)
+        # Obtener la ruta absoluta del archivo PDF generado y agregarla a la lista
+        ruta_pdf = os.path.abspath(f"codigos_qr_{categoria.nombre}.pdf")
+        rutas_pdf.append(ruta_pdf)
 
-    # Agregar los nombres de los productos al PDF
-    for i, producto in enumerate(productos_ordenados):
-        x = (i % 6) * 100 + 10
-        y = ((i % 30) // 6) * 100 + 90
-        page.drawText(x, y, producto['nombre_producto'])
+    # Obtener la lista de archivos PDF en el directorio actual
+    archivos_pdf = [archivo for archivo in os.listdir() if archivo.endswith(".pdf")]
 
-    # Crear la respuesta con el PDF generado
-    response = make_response(pdf.writeToString())
-    response.headers['Content-Disposition'] = 'attachment; filename=qr_{}.pdf'.format(categoria)
-    response.mimetype = 'application/pdf'
-    return response
+    # Renderizar la plantilla HTML y pasar la lista de archivos PDF y las rutas absolutas de los archivos generados como contexto
+    return render_template("pdf_qr.html", archivos_pdf=archivos_pdf, rutas_pdf=rutas_pdf)
 
-
+@app.route('/descargar_pdf/<nombre_archivo>')
+def descargar_pdf(nombre_archivo):
+    return send_file(nombre_archivo, as_attachment=True)
 if __name__ == '__main__':
     app.run(debug=True)
