@@ -59,8 +59,8 @@ class Producto:
       descripcion="",
       precio_compra=0,
       precio_venta=0,
-      cantidad=0,
-      cantidad_minima=0,
+      cantidad=0.0,
+      cantidad_minima=0.0,
       proveedor_id=0,
       id_bodega=0,
       categoria_id=0

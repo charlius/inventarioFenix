@@ -183,11 +183,11 @@ def editar_producto(producto_id=0):
                 return redirect('/salida')
             cantidad = data['new_existencia']
             if "salida" in movimiento:
-                producto.cantidad = producto.cantidad - int(cantidad)
+                producto.cantidad = producto.cantidad - float(cantidad)
             elif "entrada" in movimiento:
-                producto.cantidad = producto.cantidad + int(cantidad)
+                producto.cantidad = producto.cantidad + float(cantidad)
 
-            producto.editar_movimiento(int(cantidad), movimiento, usuario.id)
+            producto.editar_movimiento(float(cantidad), movimiento, usuario.id)
             return {"message": "ok"}
 
     categorias = Categoria.obtener_todos()
@@ -629,5 +629,14 @@ def generar_pdf():
 @app.route('/descargar_pdf/<nombre_archivo>')
 def descargar_pdf(nombre_archivo):
     return send_file(nombre_archivo, as_attachment=True)
+
+def formatear_float(num):
+    if num == int(num):
+        return str(int(num))
+    elif num - int(num) == 0:
+        return str(int(num))
+    else:
+        return str(num)
+    
 if __name__ == '__main__':
     app.run(debug=True)
