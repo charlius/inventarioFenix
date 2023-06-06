@@ -93,6 +93,9 @@ def productos():
         return redirect('/')
 
 
+
+
+
 @app.route('/productos/crear_producto', methods=['GET', 'POST'])
 def crear_producto():
     if 'usuario' not in session and "administrador" not in session['tipo_usuario']:

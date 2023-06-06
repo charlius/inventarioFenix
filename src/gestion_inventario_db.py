@@ -7,19 +7,21 @@ from src.db import ConexionBaseDatos
 
 class Proveedor:
   def __init__(self, nombre_proveedor, direccion, telefono):
-    self.conexion_db = ConexionBaseDatos()
+    
     self.id = None
     self.nombre_proveedor = nombre_proveedor
     self.direccion = direccion
     self.telefono = telefono
 
   def guardar(self):
+    self.conexion_db = ConexionBaseDatos()
     consulta = "INSERT INTO proveedores (nombre_proveedor, direccion, telefono) VALUES (%s, %s, %s)"
     valores = (self.nombre_proveedor, self.direccion, self.telefono)
     self.conexion_db.ejecutar_consulta(consulta, valores)
     self.conexion_db.cerrar_conexion()
 
   def editar(self):
+    self.conexion_db = ConexionBaseDatos()
     consulta = "UPDATE proveedores SET nombre_proveedor=%s, direccion=%s, telefono=%s WHERE id=%s"
     valores = (self.nombre_proveedor, self.direccion, self.telefono, self.id)
     self.conexion_db.ejecutar_consulta(consulta, valores)
@@ -65,7 +67,7 @@ class Producto:
       id_bodega=0,
       categoria_id=0
 ):
-    self.conexion_db = ConexionBaseDatos()
+    
     self.id = None
     self.nombre_producto = nombre_producto
     self.descripcion = descripcion
@@ -78,6 +80,7 @@ class Producto:
     self.id_categoria = categoria_id
 
   def guardar(self, id_usuario, code_qr):
+    self.conexion_db = ConexionBaseDatos()
     consulta = "INSERT INTO productos (nombre_producto, descripcion, precio_compra, precio_venta, cantidad, cantidad_minima, proveedor_id, id_bodega, id_categoria, code_qr) VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s, %s)"
     valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega, self.id_categoria, code_qr)
     self.conexion_db.ejecutar_consulta(consulta, valores)
@@ -87,12 +90,14 @@ class Producto:
     self.conexion_db.cerrar_conexion()
 
   def editar(self):
+    self.conexion_db = ConexionBaseDatos()
     consulta = "UPDATE productos SET nombre_producto=%s, descripcion=%s, precio_compra=%s, precio_venta=%s, cantidad=%s, cantidad_minima=%s, proveedor_id=%s, id_bodega=%s, id_categoria=%s WHERE id=%s"
     valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega, self.id_categoria, self.id)
     self.conexion_db.ejecutar_consulta(consulta, valores)
     self.conexion_db.cerrar_conexion()
 
   def editar_movimiento(self, cantidad, movimiento, id_usuario):
+    self.conexion_db = ConexionBaseDatos()
     consulta = "UPDATE productos SET nombre_producto=%s, descripcion=%s, precio_compra=%s, precio_venta=%s, cantidad=%s, cantidad_minima=%s, proveedor_id=%s, id_bodega=%s, id_categoria=%s WHERE id=%s"
     valores = (self.nombre_producto, self.descripcion, self.precio_compra, self.precio_venta, self.cantidad, self.cantidad_minima, self.proveedor_id, self.id_bodega, self.id_categoria, self.id)
     self.conexion_db.ejecutar_consulta(consulta, valores)
@@ -170,18 +175,20 @@ class Producto:
 
 class Bodega:
   def __init__(self, nombre_bodega, direccion):
-    self.conexion_db = ConexionBaseDatos()
+    
     self.id = None
     self.nombre_bodega = nombre_bodega
     self.direccion = direccion
 
   def guardar(self):
+    self.conexion_db = ConexionBaseDatos()
     consulta = "INSERT INTO bodegas (nombre_bodega, direccion) VALUES (%s, %s)"
     valores = (self.nombre_bodega, self.direccion)
     self.conexion_db.ejecutar_consulta(consulta, valores)
     self.conexion_db.cerrar_conexion()
 
   def editar(self):
+    self.conexion_db = ConexionBaseDatos()
     consulta = "UPDATE bodegas SET nombre_bodega=%s, direccion=%s WHERE id=%s"
     valores = (self.nombre_bodega, self.direccion, self.id)
     self.conexion_db.ejecutar_consulta(consulta, valores)
@@ -215,17 +222,19 @@ class Bodega:
 
 class Categoria:
   def __init__(self, nombre):
-    self.conexion_db = ConexionBaseDatos()
+    
     self.id = None
     self.nombre = nombre
 
   def guardar(self):
+    self.conexion_db = ConexionBaseDatos()
     consulta = "INSERT INTO categorias (nombre) VALUES (%s)"
     valores = (self.nombre,)
     self.conexion_db.ejecutar_consulta(consulta, valores)
     self.conexion_db.cerrar_conexion()
 
   def editar(self):
+    self.conexion_db = ConexionBaseDatos()
     consulta = "UPDATE categorias SET nombre=%s WHERE id=%s"
     valores = (self.nombre, self.id)
     self.conexion_db.ejecutar_consulta(consulta, valores)
@@ -260,19 +269,21 @@ class Categoria:
 
 class Usuario:
   def __init__(self, nombre_usuario, contrasena, tipo_usuario):
-    self.conexion_db = ConexionBaseDatos()
+    
     self.id = None
     self.nombre_usuario = nombre_usuario
     self.contrasena = contrasena
     self.tipo_usuario = tipo_usuario
 
   def guardar(self):
+    self.conexion_db = ConexionBaseDatos()
     consulta = "INSERT INTO usuarios (nombre_usuario, contrasena, tipo_usuario) VALUES (%s, %s, %s)"
     valores = (self.nombre_usuario, generate_password_hash(self.contrasena), self.tipo_usuario)
     self.conexion_db.ejecutar_consulta(consulta, valores)
     self.conexion_db.cerrar_conexion()
 
   def editar(self):
+    self.conexion_db = ConexionBaseDatos()
     if self.contrasena:
       consulta = "UPDATE usuarios SET nombre_usuario=%s, contrasena=%s, tipo_usuario=%s WHERE id=%s"
       valores = (self.nombre_usuario, generate_password_hash(self.contrasena), self.tipo_usuario, self.id)
@@ -324,7 +335,7 @@ class Usuario:
 
 class Movimiento:
   def __init__(self, id_producto, id_bodega, cantidad, tipo_movimiento, usuario_id):
-    self.conexion_db = ConexionBaseDatos()
+    
     self.id = None
     self.id_producto = id_producto
     self.id_bodega = id_bodega
@@ -335,12 +346,14 @@ class Movimiento:
     self.fecha = datetime.strptime(self.fecha, '%Y-%m-%d %H:%M:%S')
 
   def guardar(self):
+    self.conexion_db = ConexionBaseDatos()
     consulta = "INSERT INTO movimientos (fecha, tipo_movimiento, cantidad, usuario_id, producto_id, bodega_id) VALUES (%s, %s, %s, %s, %s, %s)"
     valores = (self.fecha, self.tipo_movimiento, self.cantidad, self.usuario_id, self.id_producto, self.id_bodega)
     self.conexion_db.ejecutar_consulta(consulta, valores)
     self.conexion_db.cerrar_conexion()
 
   def editar(self):
+    self.conexion_db = ConexionBaseDatos()
     consulta = "UPDATE movimientos SET id_producto=%s, id_bodega=%s, cantidad=%s, usuario_id=%s tipo_movimiento=%s, fecha=%s WHERE id=%s"
     valores = (self.id_producto, self.id_bodega, self.cantidad, self.tipo_movimiento, self.fecha, self.id)
     self.conexion_db.ejecutar_consulta(consulta, valores)
